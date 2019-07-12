@@ -48,7 +48,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def game_params
-          params.require(:game).permit(:name, :description, :min_players, :max_players)
+          params.require(:game).permit(:name, :description, :min_players, :max_players, :min_play_time, :max_play_time)
         end
     end
   end
