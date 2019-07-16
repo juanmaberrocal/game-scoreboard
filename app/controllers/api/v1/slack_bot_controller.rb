@@ -1,12 +1,20 @@
 module Api
   module V1
     class SlackBotController < ApplicationController
+      # Add a before_action to authenticate all requests
       before_action :authenticate
 
-      def authorize; end
+      # def authorize; end
 
       def game_score
-        # SlashCommandResponseJob.perform_later()
+        game = Game.find_by(name: params[:text])
+        raise 'Game not found' unless game.present?
+
+        # SlashCommandResponseJob.perform_later(game)
+
+        success_response
+      rescue => e
+        error_response(e.message)
       end
 
       def games_scoreboard
@@ -14,6 +22,28 @@ module Api
 
       private
 
+      DEFAULT_RESPONSE_TYPE = 'ephemeral'.freeze
+      DEFAULT_SUCCESS_TEXT  = 'Awesome, pulling results. Please wait a minute.'.freeze
+      DEFAULT_ERROR_TEXT    = 'Sorry, that didn\'t work. Please try again.'.freeze
+
+      def success_response(text = DEFAULT_SUCCESS_TEXT, response_type = DEFAULT_RESPONSE_TYPE, attachments = [])
+        slack_response(text, response_type, attachments)
+      end
+
+      def error_response(text = DEFAULT_ERROR_TEXT, response_type = DEFAULT_RESPONSE_TYPE, attachments = [])
+        slack_response(text, response_type, attachments)
+      end
+
+      def slack_response(text, response_type, attachments)
+        json_response = { response_type: response_type, text: text }
+        json_response[:attachments] = attachments if attachments.present?
+
+        render json: json_response, status: 200
+      end
+
+      protected
+
+      # Authenticate the slash command with token based authentication
       def authenticate
         authenticate_token || render_unauthorized
       end
