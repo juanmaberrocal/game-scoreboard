@@ -15,6 +15,13 @@ Rails.application.routes.draw do
 
         # /api/v1/players
         resources :players
+
+        # /api/v1/slack_bot
+        namespace :slack_bot do
+          get  'authorize'
+          post 'game_score'
+          post 'games_scoreboard'
+        end
       end
     # end
   end
