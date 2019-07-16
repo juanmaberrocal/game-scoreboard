@@ -41,17 +41,28 @@ module Api
         render json: json_response, status: 200
       end
 
+      def slack_signature
+        headers['X-Slack-Signature']
+      end
+
+      def slack_timestamp
+        headers['X-Slack-Request-Timestamp']
+      end
+
+      def slack_body
+        body
+      end
+
       protected
 
-      # Authenticate the slash command with token based authentication
+      # Authenticate the slash command with signature based authentication
       def authenticate
-        authenticate_token || render_unauthorized
-      end
-
-      def authenticate_token
-      end
-
-      def render_unauthorized
+        SlackRequestAuthenticator.new(slack_signature, slack_timestamp, slack_body)
+                                 .authenticate!
+      rescue InvalidSlackRequest => e
+        error_response(e.message)
+      rescue => e
+        error_response
       end
     end
   end
