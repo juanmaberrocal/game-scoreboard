@@ -52,7 +52,7 @@ module Api
 
       def set_game
         @game = Game.find_by(name: params[:text])
-        raise InvalidGameRequest.new(params[:text]) unless game.present?
+        raise InvalidGameRequest.new(params[:text]) unless @game.present?
       end
 
       protected
