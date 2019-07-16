@@ -16,9 +16,6 @@ gem 'puma', '~> 3.11'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# A lightning fast JSON:API serializer for Ruby Objects.
-gem 'fast_jsonapi'
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -28,9 +25,18 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+# A lightning fast JSON:API serializer for Ruby Objects.
+gem 'fast_jsonapi'
+
+# Simple, efficient background processing for Ruby http://sidekiq.org
+gem 'sidekiq'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # A Ruby gem to load environment variables from `.env`.
+  gem 'dotenv-rails'
 
   # rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework
   gem 'rspec-rails', '~> 3.8'
