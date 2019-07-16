@@ -56,6 +56,6 @@ class SlackRequestAuthenticator
   end
 
   def invalid!
-    raise InvalidSlackRequest
+    raise InvalidSlackRequest.new
   end
 end

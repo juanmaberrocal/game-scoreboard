@@ -7,11 +7,8 @@ module Api
       # def authorize; end
 
       def game_score
-        game = Game.find_by(name: params[:text])
-        raise 'Game not found' unless game.present?
-
-        # SlashCommandResponseJob.perform_later(game)
-
+        set_game
+        # SlashCommandResponseJob.perform_later(@game)
         success_response
       rescue => e
         error_response(e.message)
@@ -51,6 +48,11 @@ module Api
 
       def slack_body
         body
+      end
+
+      def set_game
+        @game = Game.find_by(name: params[:text])
+        raise InvalidGameRequest.new(params[:text]) unless game.present?
       end
 
       protected
