@@ -20,7 +20,7 @@ class SlackRequestAuthenticator
 
   private
 
-  HASH_SECRET = 'foo' # ENV[''].freeze
+  HASH_SECRET = ENV['SLACK_SIGNING_SECRET'].freeze
   HASH_DIGEST = 'SHA256'.freeze
 
   def signature=(s)
