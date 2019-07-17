@@ -31,7 +31,7 @@ class Match < ApplicationRecord
       match_players.includes(:player).each_with_index do |match_player, i|
         standing << {
           position: (i + 1),
-          player:   match_player.player.nickname,
+          player:   match_player.player_name,
           winner:   match_player.winner
         }
       end
