@@ -20,7 +20,12 @@ Rails.application.routes.draw do
         namespace :slack_bot do
           # get  'authorize'
           post 'game_score'
-          post 'games_scoreboard'
+          post 'game_scoreboard'
+
+          post 'player_score'
+          post 'player_scoreboard'
+
+          post 'match_score'
         end
       end
     # end
