@@ -135,7 +135,6 @@ if Match.count.zero?
     {
       game: 'Catan', players: [
         { name: 'juanma', winner: true },
-        { name: 'dul', winner: false },
         { name: 'ma', winner: false },
         { name: 'caro', winner: false }
       ]
