@@ -19,6 +19,7 @@ class SlackPostRequest
   private
 
   CONTENT_TYPE = 'application/json'.freeze
+  RESPONSE_TYPE = 'in_channel'.freeze
 
   def uri
     @uri ||= URI.parse(response_url)
@@ -33,8 +34,14 @@ class SlackPostRequest
   end
 
   def request_body(body)
+    request_visibility(body)
     request_context(body) if user_id.present?
+
     request.body = body.to_json
+  end
+
+  def request_visibility(body)
+    body[:response_type] ||= RESPONSE_TYPE
   end
 
   def request_context(body)
