@@ -9,6 +9,14 @@ class SlashCommandServicePicker
     case command
     when '/game-score'
       SlashCommands::GameScoreService.new(*args)
+    when '/games-score'
+      SlashCommands::GamesScoreService.new(*args)
+    when '/match-score'
+      SlashCommands::MatchScoreService.new(*args)
+    when '/player-score'
+      SlashCommands::PlayerScoreService.new(*args)
+    when '/players-score'
+      SlashCommands::PlayersScoreService.new(*args)
     else
       raise InvalidSlashCommand.new(command)
     end

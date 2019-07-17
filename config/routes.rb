@@ -21,11 +21,11 @@ Rails.application.routes.draw do
           # get  'authorize'
           post 'game_score'
           post 'game_scoreboard'
+          
+          post 'match_score'
 
           post 'player_score'
           post 'player_scoreboard'
-
-          post 'match_score'
         end
       end
     # end

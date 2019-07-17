@@ -1,7 +1,7 @@
 module StandingsGenerators
-  class GameStandingsService < StandingsGeneratorService
-    def initialize(record)
-      super(Game, record)
+  class GamesStandingsService < StandingsGeneratorService
+    def initialize
+      super(Game)
     end
 
     def generate

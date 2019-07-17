@@ -15,6 +15,11 @@ class Player < ApplicationRecord
   has_many :match_players
   has_many :matches, -> { order 'matches.created_at DESC' }, through: :match_players
 
+  def self.find_by_name(search_name)
+    Player.find_by(nickname: search_name) ||
+    Player.similar('first_name || last_name', search_name.capitalize)
+  end
+
   def self.standings
     StandingsGenerators::PlayersStandingsService.new
                                                 .generate
@@ -24,7 +29,7 @@ class Player < ApplicationRecord
     if full_name
       full_name
     else
-      nickname
+      nickname.capitalize
     end
   end
 
