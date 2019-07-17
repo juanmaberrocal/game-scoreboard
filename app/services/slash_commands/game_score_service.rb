@@ -70,8 +70,8 @@ module SlashCommands
 
     def yes_match_block_text(standing)
       "*#{standing[:position]}. "\
-      "#{standing[:winner] ? '(_Winner_)' : ''}* "\
-      "#{standing[:player].capitalize}"
+      "#{standing[:num_won].zero? ? '' : '(_Winner_)'}* "\
+      "#{standing[:name].capitalize}"
     end
 
     def no_match_response

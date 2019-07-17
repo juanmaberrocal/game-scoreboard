@@ -27,6 +27,10 @@ class Game < ApplicationRecord
     Game.similar(:slug, search_name.downcase)
   end
 
+  def random_match
+    matches.sample(1).first
+  end
+
   def last_match
     matches.first
   end

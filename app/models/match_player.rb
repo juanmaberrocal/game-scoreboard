@@ -25,10 +25,6 @@ class MatchPlayer < ApplicationRecord
   belongs_to :player
 
   def player_name(full_name = false)
-    if full_name
-      player.full_name
-    else
-      player.nickname
-    end
+    player.player_name(full_name)
   end
 end

@@ -26,15 +26,13 @@ class Match < ApplicationRecord
     created_at.strftime(format)
   end
 
+  def match_winners
+    match_players.includes(:player)
+                 .where(winner: true)
+  end
+
   def standings
-    [].tap do |standing|
-      match_players.includes(:player).each_with_index do |match_player, i|
-        standing << {
-          position: (i + 1),
-          player:   match_player.player_name,
-          winner:   match_player.winner
-        }
-      end
-    end
+    StandingsGenerators::MatchStandingsService.new(self)
+                                              .generate
   end
 end
