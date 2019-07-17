@@ -43,7 +43,7 @@ class SlackPostRequest
       elements: [
         {
           type: 'mrkdwn',
-          text: "Requested by: <#{user_id}>"
+          text: "Requested by: <@#{user_id}>"
         }
       ]
     }
