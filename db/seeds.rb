@@ -105,3 +105,88 @@ players.each do |pl|
   player = Player.find_or_initialize_by(first_name: pl[:first_name], last_name: pl[:last_name])
   player.update(pl)
 end
+
+if Match.count.zero?
+  matches = [
+    {
+      game: 'Sequence', players: [
+        { name: 'juanma', winner: true },
+        { name: 'dul', winner: true },
+        { name: 'ma', winner: false },
+        { name: 'caro', winner: false }
+      ]
+    },
+    {
+      game: 'Sequence', players: [
+        { name: 'juanma', winner: true },
+        { name: 'dul', winner: true },
+        { name: 'ma', winner: false },
+        { name: 'caro', winner: false }
+      ]
+    },
+    {
+      game: 'Sequence', players: [
+        { name: 'juanma', winner: true },
+        { name: 'dul', winner: true },
+        { name: 'ma', winner: false },
+        { name: 'caro', winner: false }
+      ]
+    },
+    {
+      game: 'Catan', players: [
+        { name: 'juanma', winner: true },
+        { name: 'dul', winner: false },
+        { name: 'ma', winner: false },
+        { name: 'caro', winner: false }
+      ]
+    },
+    {
+      game: 'Catan', players: [
+        { name: 'juanma', winner: false },
+        { name: 'dul', winner: false },
+        { name: 'ma', winner: false },
+        { name: 'caro', winner: true }
+      ]
+    },
+    {
+      game: 'Catan', players: [
+        { name: 'juanma', winner: false },
+        { name: 'dul', winner: false },
+        { name: 'ma', winner: true },
+        { name: 'caro', winner: false }
+      ]
+    },
+    {
+      game: 'Codenames', players: [
+        { name: 'juanma', winner: true },
+        { name: 'dul', winner: false },
+        { name: 'ma', winner: true },
+        { name: 'caro', winner: false }
+      ]
+    },
+    {
+      game: 'Codenames', players: [
+        { name: 'juanma', winner: false },
+        { name: 'dul', winner: true },
+        { name: 'ma', winner: false },
+        { name: 'caro', winner: true }
+      ]
+    },
+    {
+      game: 'Codenames', players: [
+        { name: 'juanma', winner: true },
+        { name: 'dul', winner: false },
+        { name: 'ma', winner: true },
+        { name: 'caro', winner: false }
+      ]
+    }
+  ]
+
+  matches.each do |m|
+    match = Match.create(game: Game.find_by_name(m[:game]))
+    m[:players].each do |pl|
+      player = Player.find_by(nickname: pl[:name])
+      MatchPlayer.create(match: match, player: player, winner: pl[:winner])
+    end
+  end
+end
