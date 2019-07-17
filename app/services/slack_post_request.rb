@@ -33,7 +33,7 @@ class SlackPostRequest
   end
 
   def request_body(body)
-    body = request_context(body) if user_id.present?
+    request_context(body) if user_id.present?
     request.body = body.to_json
   end
 
