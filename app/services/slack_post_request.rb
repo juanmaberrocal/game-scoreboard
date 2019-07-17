@@ -18,7 +18,7 @@ class SlackPostRequest
 
   private
 
-  CONTENT_TYPE = 'application/json'.freeze
+  CONTENT_TYPE  = 'application/json'.freeze
   RESPONSE_TYPE = 'in_channel'.freeze
 
   def uri
