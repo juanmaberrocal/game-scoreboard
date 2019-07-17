@@ -7,10 +7,10 @@ class SlashCommandServicePicker
 
   def select(*args)
     case command
-    when 'game-score'
+    when '/game-score'
       SlashCommands::GameScoreService.new(*args)
     else
-      InvalidSlashCommand.new(command)
+      raise InvalidSlashCommand.new(command)
     end
   end
 end
