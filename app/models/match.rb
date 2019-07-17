@@ -19,7 +19,7 @@
 class Match < ApplicationRecord
   belongs_to :game
 
-  has_many :match_players, -> { order 'match_players.winner' }, dependent: :destroy
+  has_many :match_players, -> { order 'match_players.winner DESC' }, dependent: :destroy
   has_many :players, through: :match_players
 
   def played_on(format = '%m/%d/%Y')
