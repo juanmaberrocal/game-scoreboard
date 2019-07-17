@@ -1,16 +1,16 @@
 module SlashCommands
   class GameScoreService < SlashCommandService
     attr_reader :game,
-                :match, :players
+                :match, :standings
 
     def initialize(game_id)
-      game = game_id
+      self.game = game_id
       super()
     end
 
     def fetch_response
       fetch_match
-      fetch_players
+      fetch_standings
       super()
     end
 
@@ -21,11 +21,11 @@ module SlashCommands
     end
 
     def fetch_match
-      @match = game.present? ? Match.where(game_id: game.id).last : nil
+      @match = game.present? ? game.last_match : nil
     end
 
-    def fetch_players
-      @players = match.present? ? match.players.pluck(:nickname) : []
+    def fetch_standings
+      @standings = match.present? ? match.standings : []
     end
 
     def build_response
@@ -42,21 +42,27 @@ module SlashCommands
     end
 
     def yes_match_text
-      @text = "The last game of `#{game.name}` was played on #{game.created_at.strftime('%m/%d/%Y')}. "\
+      @text = "The last game of `#{game.name}` was played on #{match.played_on}. "\
               "Here are the results:"
     end
 
     def yes_match_blocks
-      players.each_with_index do |player, i|
-        yes_match_block(player, i + 1)
+      standings.each do |standing|
+        yes_match_block(standing)
       end
     end
 
-    def yes_match_block(player, position)
+    def yes_match_block(standing)
       @blocks << {
         type: 'section',
-        text: "*#{position}.* #{player.capitalize}"
+        text: yes_match_block_text(standing)
       }
+    end
+
+    def yes_match_block_text(standing)
+      "*#{standing[:position]}. "\
+      "#{standing[:winner] ? '(_Winner_)' : ''}* "\
+      "#{standing[:player].capitalize}"
     end
 
     def no_match_response
