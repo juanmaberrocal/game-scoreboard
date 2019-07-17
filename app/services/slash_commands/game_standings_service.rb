@@ -1,6 +1,6 @@
 module SlashCommands
-  class MatchScoreService < StandingsService
-    attr_reader :game, :match
+  class GameStandingsService < StandingsService
+    attr_reader :game
 
     def initialize(game_id)
       self.game = game_id
@@ -8,7 +8,6 @@ module SlashCommands
     end
 
     def fetch_response
-      fetch_match
       fetch_standings
       super()
     end
@@ -19,12 +18,8 @@ module SlashCommands
       @game = Game.find_by(id: g)
     end
 
-    def fetch_match
-      @match = game.present? ? game.last_match : nil
-    end
-
     def fetch_standings
-      @standings = match.present? ? match.standings : []
+      @standings = game.present? ? game.standings : []
     end
 
     def yes_response_text
@@ -32,16 +27,10 @@ module SlashCommands
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: "The last game of `#{game.name}` was played on #{match.played_on}. "\
-                "Here are the results:"
+          text: "The current champion of `#{game.name}` is *#{standings.first[:name]}*. "\
+                "Here are the complete standings:"
         }
       }
-    end
-
-    def yes_response_block_text(standing)
-      "*#{standing[:position]}.* "\
-      "#{standing[:name]} "\
-      "#{standing[:num_won].zero? ? '' : '_(Winner)_'} "
     end
 
     def no_response_text

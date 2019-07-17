@@ -1,6 +1,12 @@
 module SlashCommands
-  class PlayersScoreService < StandingsService
-    
+  class PlayerStandingsService < StandingsService
+    attr_reader :player
+
+    def initialize(player_id)
+      self.player = player_id
+      super()
+    end
+
     def fetch_response
       fetch_standings
       super()
@@ -8,8 +14,12 @@ module SlashCommands
 
     private
 
+    def player=(pl)
+      @player = Player.find_by(id: pl)
+    end
+
     def fetch_standings
-      @standings = Player.standings
+      @standings = player.present? ? player.standings : []
     end
 
     def yes_response_text
@@ -17,7 +27,7 @@ module SlashCommands
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: "The boardgames champion is *#{standings.first[:name]}*. "\
+          text: "`#{player.player_name}'s` best game is *#{standings.first[:name]}*. "\
                 "Here are the complete standings:"
         }
       }
@@ -28,7 +38,7 @@ module SlashCommands
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: "No one has played any games yet!"
+          text: "`#{player.name}` has not played any games yet!"
         }
       }
     end

@@ -8,15 +8,15 @@ class SlashCommandServicePicker
   def select(*args)
     case command
     when '/game-score'
-      SlashCommands::GameScoreService.new(*args)
+      SlashCommands::GameStandingsService.new(*args)
     when '/games-score'
-      SlashCommands::GamesScoreService.new(*args)
+      SlashCommands::GamesStandingsService.new(*args)
     when '/match-score'
-      SlashCommands::MatchScoreService.new(*args)
+      SlashCommands::MatchStandingsService.new(*args)
     when '/player-score'
-      SlashCommands::PlayerScoreService.new(*args)
+      SlashCommands::PlayerStandingsService.new(*args)
     when '/players-score'
-      SlashCommands::PlayersScoreService.new(*args)
+      SlashCommands::PlayersStandingsService.new(*args)
     else
       raise InvalidSlashCommand.new(command)
     end
