@@ -42,8 +42,14 @@ module SlashCommands
     end
 
     def yes_match_text
-      @text = "The last game of `#{game.name}` was played on #{match.played_on}. "\
-              "Here are the results:"
+      @blocks << {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: "The last game of `#{game.name}` was played on #{match.played_on}. "\
+                "Here are the results:"
+        }
+      }
     end
 
     def yes_match_blocks
@@ -55,7 +61,10 @@ module SlashCommands
     def yes_match_block(standing)
       @blocks << {
         type: 'section',
-        text: yes_match_block_text(standing)
+        text: {
+          type: 'mrkdwn',
+          text: yes_match_block_text(standing)
+        }
       }
     end
 
@@ -70,7 +79,13 @@ module SlashCommands
     end
 
     def no_match_text
-      @text = "No games of `#{game.name}` have been played yet!"
+      @blocks << {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: "No games of `#{game.name}` have been played yet!"
+        }
+      }
     end
   end
 end

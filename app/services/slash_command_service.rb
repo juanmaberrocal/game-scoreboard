@@ -1,9 +1,7 @@
 class SlashCommandService
-  attr_reader :text, :blocks,
-              :response_url, :user_id
+  attr_reader :blocks
 
   def initialize
-    @text   = ''
     @blocks = []
   end
 
@@ -13,45 +11,30 @@ class SlashCommandService
 
 
   def post_response(response_url, user_id = nil)
-    @response_url = response_url
-    @user_id      = user_id
-
-    build_body
-
-    http.use_ssl = true
-    http.request(request)
+    SlackPostRequest.new(response_url, user_id)
+                    .post(build_body)
   end
 
   private
-
-  CONTENT_TYPE = 'application/json'.freeze
   
   def build_response; end
 
-  def uri
-    @uri ||= URI.parse(response_url)
-  end
-
-  def http
-    @http ||= Net::HTTP.new(uri.host, uri.port)
-  end
-
-  def request
-    @request ||= Net::HTTP::Post.new(uri.path, { 'Content-Type' => CONTENT_TYPE })
-  end
-
   def build_body
-    body = {}
-
-    add_text
-    add_blocks
-
-    request.body = body.to_json
+    {}.tap do |body|
+      body[:blocks] = blocks     if blocks.present?
+      body[:blocks] = error_text unless blocks.present?
+    end
   end
 
-  def add_text
-  end
-
-  def add_blocks
+  def error_text
+    [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: 'No data could be collected for your request, sorry!'
+        }
+      }
+    ]
   end
 end
