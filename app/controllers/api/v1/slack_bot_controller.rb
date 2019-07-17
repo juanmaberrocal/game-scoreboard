@@ -24,7 +24,7 @@ module Api
       DEFAULT_ERROR_TEXT    = 'Sorry, that didn\'t work. Please try again.'.freeze
 
       def set_game
-        @game = Game.find_by(name: params[:text])
+        @game = Game.find_by_name(params[:text])
         raise InvalidGameRequest.new(params[:text]) unless @game.present?
       end
 

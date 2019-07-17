@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_12_205807) do
+ActiveRecord::Schema.define(version: 2019_07_17_153323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_07_12_205807) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "min_play_time"
     t.integer "max_play_time"
+    t.string "slug"
   end
 
   create_table "match_players", force: :cascade do |t|

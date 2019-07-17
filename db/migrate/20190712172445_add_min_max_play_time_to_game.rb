@@ -11,7 +11,7 @@ class AddMinMaxPlayTimeToGame < ActiveRecord::Migration[6.0]
     return unless column_exists?(:games, :min_play_time) ||
                   column_exists?(:games, :max_play_time)
 
-    drop_column(:games, :min_play_time) if column_exists?(:games, :min_play_time)
-    drop_column(:games, :max_play_time) if column_exists?(:games, :max_play_time)
+    remove_column(:games, :min_play_time) if column_exists?(:games, :min_play_time)
+    remove_column(:games, :max_play_time) if column_exists?(:games, :max_play_time)
   end
 end

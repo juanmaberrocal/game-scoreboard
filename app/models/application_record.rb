@@ -1,10 +1,15 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  def self.random(count, column = nil)
+  def self.random(count = 1)
     records = self.all
-    records = records.pluck(column.to_sym) if column.present?
     records = records.sample(count)
+    records
+  end
+
+  def self.similar(column, value)
+    records = self.all
+    records = records.where("#{column} LIKE ?", "%#{value.gsub(/\s+/, '%')}%")
     records
   end
 end

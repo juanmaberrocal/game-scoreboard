@@ -6,6 +6,6 @@ class AddNicknameToPlayer < ActiveRecord::Migration[6.0]
 
   def down
     return unless column_exists?(:players, :nickname)
-    drop_column(:players, :nickname)
+    remove_column(:players, :nickname)
   end
 end
