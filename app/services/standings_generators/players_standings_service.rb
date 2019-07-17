@@ -12,7 +12,8 @@ module StandingsGenerators
     private
 
     def matches_won
-      @matches_won ||= MatchPlayer.select(:player_id).where(winner: true)
+      @matches_won ||= MatchPlayer.select(:player_id)
+                                  .where(winner: true)
     end
 
     def select_player(player_id)

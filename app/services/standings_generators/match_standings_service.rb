@@ -12,7 +12,8 @@ module StandingsGenerators
     private
 
     def match_players
-      @match_players ||= record.match_players.select(:id, :player_id, :winner)
+      @match_players ||= record.match_players
+                               .select(:id, :player_id, :winner)
     end
 
     def select_player(player_id)

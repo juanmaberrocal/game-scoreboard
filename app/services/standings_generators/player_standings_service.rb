@@ -12,7 +12,9 @@ module StandingsGenerators
     private
 
     def matches_won
-      @matches_won ||= record.matches.select(:id, :game_id).where(match_players: { winner: true })
+      @matches_won ||= record.matches
+                             .select(:id, :game_id)
+                             .where(match_players: { winner: true })
     end
 
     def select_game(game_id)
