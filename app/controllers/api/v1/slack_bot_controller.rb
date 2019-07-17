@@ -8,7 +8,7 @@ module Api
 
       def game_score
         set_game
-        # SlashCommandResponseJob.perform_later(@game)
+        queue_response(@game.id)
         success_response
       rescue => e
         error_response(e.message)
@@ -22,6 +22,18 @@ module Api
       DEFAULT_RESPONSE_TYPE = 'ephemeral'.freeze
       DEFAULT_SUCCESS_TEXT  = 'Awesome, pulling results. Please wait a minute.'.freeze
       DEFAULT_ERROR_TEXT    = 'Sorry, that didn\'t work. Please try again.'.freeze
+
+      def set_game
+        @game = Game.find_by(name: params[:text])
+        raise InvalidGameRequest.new(params[:text]) unless @game.present?
+      end
+
+      def queue_response(*args)
+        SlashCommandResponseJob.perform_later(params[:command],
+                                              params[:response_url],
+                                              params[:user_id],
+                                              *args)
+      end
 
       def success_response(text = DEFAULT_SUCCESS_TEXT, response_type = DEFAULT_RESPONSE_TYPE, attachments = [])
         slack_response(text, response_type, attachments)
@@ -48,11 +60,6 @@ module Api
 
       def slack_body
         body
-      end
-
-      def set_game
-        @game = Game.find_by(name: params[:text])
-        raise InvalidGameRequest.new(params[:text]) unless @game.present?
       end
 
       protected
