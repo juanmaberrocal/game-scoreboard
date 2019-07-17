@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: matches
+#
+#  id         :bigint           not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  game_id    :bigint           not null
+#
+# Indexes
+#
+#  index_matches_on_game_id  (game_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (game_id => games.id)
+#
+
 class Match < ApplicationRecord
   belongs_to :game
 
