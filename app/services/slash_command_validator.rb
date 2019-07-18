@@ -1,4 +1,6 @@
 class SlashCommandValidator
+  include SlashCommandRegex
+
   attr_reader :command, :action,
               :is_valid
 
@@ -18,11 +20,6 @@ class SlashCommandValidator
 
   private
 
-  COMMAND = 'game-scoreboard'.freeze
-  ACTION  = 'view|add'.freeze
-  MODEL   = 'game|player|match'.freeze
-  PARAMS  = '.+'.freeze
-
   def command=(c)
     @command = c.to_s
   end
@@ -36,11 +33,11 @@ class SlashCommandValidator
   end
 
   def validate_command
-    %r{^\/#{COMMAND}$}i =~ command
+    COMMAND_REGEX =~ command
   end
 
   def validate_action
-    %r{^(#{ACTION}):(#{MODEL}) .+$}i =~ action
+    ACTION_REGEX =~ action
   end
 
   def invalid!
