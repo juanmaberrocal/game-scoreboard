@@ -4,8 +4,6 @@ module Api
       # Add a before_action to authenticate all requests
       before_action :authenticate
 
-      # def authorize; end
-
       def game_score
         set_game
         queue_response(@game.id)

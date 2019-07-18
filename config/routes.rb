@@ -18,7 +18,6 @@ Rails.application.routes.draw do
 
         # /api/v1/slack_bot
         namespace :slack_bot do
-          # get  'authorize'
           post 'game_score'
           post 'game_scoreboard'
           
