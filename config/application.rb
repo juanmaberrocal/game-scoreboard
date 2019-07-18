@@ -38,5 +38,9 @@ module GameScoreboard
     # and follow the adapter's specific installation
     # and deployment instructions.
     config.active_job.queue_adapter = :sidekiq
+
+    # Load utils modules so they can be accessed as concerns
+    # throughout the app files as needed
+    config.autoload_paths += %W( #{config.root}/app/utils )
   end
 end

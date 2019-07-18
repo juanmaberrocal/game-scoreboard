@@ -17,7 +17,7 @@ class Player < ApplicationRecord
 
   def self.find_by_name(search_name)
     Player.find_by(nickname: search_name) ||
-    Player.similar('first_name || last_name', search_name.capitalize)
+    Player.similar('first_name || last_name', search_name.capitalize).sample
   end
 
   def self.standings
