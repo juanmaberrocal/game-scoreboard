@@ -10,7 +10,7 @@ module SlashCommandActions
     private
 
     def record=(game_name)
-      @record = Game.find_by_name(id: game_name)
+      @record = Game.find_by_name(game_name)
     end
 
     def fetch_match

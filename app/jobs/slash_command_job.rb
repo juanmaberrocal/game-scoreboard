@@ -23,13 +23,11 @@ class SlashCommandJob < ApplicationJob
   def slack_error_message(message)
     {
       blocks: [
-        { section:
-          {
-            type: 'text',
-            text: {
-              type: 'mrkdwn',
-              text: message
-            }
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: message
           }
         }
       ]
