@@ -55,9 +55,9 @@ module Api
       end
 
       def queue_response(*args)
-        SlashCommandResponseJob.perform_later(params[:command],
-                                              params[:response_url],
+        SlashCommandResponseJob.perform_later(params[:response_url],
                                               params[:user_id],
+                                              params[:command],
                                               *args)
       end
 

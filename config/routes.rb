@@ -27,6 +27,15 @@ Rails.application.routes.draw do
           post 'player_scoreboard'
         end
       end
+
+      namespace :v2 do
+        namespace :slash_command do
+          post 'game_scoreboard'
+        end
+
+        namespace :slack_bot do
+        end
+      end
     # end
   end
 
