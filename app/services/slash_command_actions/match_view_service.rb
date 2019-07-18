@@ -4,7 +4,7 @@ module SlashCommandActions
 
     def initialize(game_name)
       super
-      fetch_match if @record.present?
+      fetch_match
     end
 
     private
@@ -18,7 +18,7 @@ module SlashCommandActions
     end
 
     def fetch_standings
-      @standings = record.present? ? record.standings : []
+      @standings = match.present? ? match.standings : []
     end
 
     def yes_response_text
@@ -26,10 +26,16 @@ module SlashCommandActions
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: "The current champion of `#{record.name}` is *#{standings.first[:name]}*. "\
-                "Here are the complete standings:"
+          text: "The last game of `#{record.name}` was played on #{match.played_on}. "\
+                "Here are the results:"
         }
       }
+    end
+
+    def yes_response_block_text(standing)
+      "*#{standing[:position]}.* "\
+      "#{standing[:name]} "\
+      "#{standing[:num_won].zero? ? '' : '_(Winner)_'} "
     end
 
     def no_response_text
