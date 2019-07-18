@@ -83,5 +83,12 @@ module SlashCommandActions
     end
 
     def help_response_block_text; end
+
+    def build_body
+      {}.tap do |body|
+        body[:response_type] = 'ephemeral' if blocks.present? &&
+                                              record.blank?
+      end.merge(super)
+    end
   end
 end
