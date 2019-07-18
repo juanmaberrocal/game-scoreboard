@@ -3,9 +3,9 @@ module SlashCommandActions
     attr_reader :record,
                 :standings
 
-    def initialize(record_name)
+    def initialize(record_search)
       super()
-      self.record = record_name
+      self.record = record_search
     end
 
     def fetch_response
@@ -19,7 +19,7 @@ module SlashCommandActions
 
     private
 
-    # def record=(value); end
+    def record=(value); end
 
     def build_response
       if standings.present?
@@ -81,5 +81,7 @@ module SlashCommandActions
         }
       }
     end
+
+    def help_response_block_text; end
   end
 end
