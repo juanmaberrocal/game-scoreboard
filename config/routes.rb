@@ -28,7 +28,9 @@ Rails.application.routes.draw do
         end
       end
 
+      # /api/v2/
       namespace :v2 do
+        # /api/v2/slash_command
         namespace :slash_command do
           post 'game_scoreboard'
         end
