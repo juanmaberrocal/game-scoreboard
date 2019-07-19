@@ -9,5 +9,5 @@ module SlashCommandRegex
   ACTION  = 'view|add'.freeze
   MODEL   = 'games?|players?|match'.freeze
   PARAMS  = '.+'.freeze
-  ACTION_REGEX = %r{^(#{ACTION}):(#{MODEL})( #{PARAMS})?$}i.freeze
+  ACTION_REGEX = %r{^(#{ACTION}):(#{MODEL})((?:\s+|\n)#{PARAMS})?$}im.freeze
 end
