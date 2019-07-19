@@ -48,6 +48,6 @@ class Game < ApplicationRecord
   private
 
   def slug_name
-    self.slug_name = self.name.parameterize
+    self.slug = self.name.parameterize
   end
 end
