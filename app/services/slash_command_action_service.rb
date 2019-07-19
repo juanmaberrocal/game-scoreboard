@@ -21,20 +21,22 @@ class SlashCommandActionService
 
   def build_body
     {}.tap do |body|
-      body[:blocks] = blocks     if blocks.present?
-      body[:blocks] = error_text unless blocks.present?
+      body[:blocks] = blocks      if blocks.present?
+      body[:blocks] = error_block unless blocks.present?
     end
   end
 
-  def error_text
+  def error_block
     [
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: 'No data could be collected for your request, sorry!'
+          text: error_block_text
         }
       }
     ]
   end
+
+  def error_block_text; end
 end

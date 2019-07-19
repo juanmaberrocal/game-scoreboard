@@ -12,7 +12,7 @@
 #
 
 class Player < ApplicationRecord
-  has_many :match_players
+  has_many :match_players, inverse_of: :player
   has_many :matches, -> { order 'matches.created_at DESC' }, through: :match_players
 
   def self.find_by_name(search_name)

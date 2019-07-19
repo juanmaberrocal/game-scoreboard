@@ -90,5 +90,9 @@ module SlashCommandActions
                                               record.blank?
       end.merge(super)
     end
+
+    def error_block_text
+      'No data could be collected for your request, sorry!'
+    end
   end
 end
