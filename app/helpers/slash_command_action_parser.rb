@@ -5,10 +5,13 @@ class SlashCommandActionParser
               :action, :model, :params
 
   def initialize(text)
-    @text = text
+    @text = text.strip
   end
 
   def parse
-    @action, @model, @params = text.match(ACTION_REGEX).try(:captures).try(:map, &:strip)
+    @action, @model, @params = text.match(ACTION_REGEX)
+                                   .try(:captures)
+                                   .try(:compact)
+                                   .try(:map, &:strip)
   end
 end

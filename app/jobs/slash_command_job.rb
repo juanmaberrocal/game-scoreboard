@@ -22,6 +22,7 @@ class SlashCommandJob < ApplicationJob
 
   def slack_error_message(message)
     {
+      response_type: 'ephemeral',
       blocks: [
         {
           type: 'section',
