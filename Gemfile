@@ -43,6 +43,11 @@ group :development, :test do
 
   # factory_bot is a fixtures replacement with a straightforward definition syntax
   gem 'factory_bot_rails'
+end
+
+group :test do
+  # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing. http://databasecleaner.github.io
+  gem 'database_cleaner'
 
   # Simple one-liner tests for common Rails functionality https://matchers.shoulda.io
   gem 'shoulda-matchers'
