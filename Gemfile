@@ -37,9 +37,7 @@ group :development, :test do
 
   # A Ruby gem to load environment variables from `.env`.
   gem 'dotenv-rails'
-end
 
-group :test do
   # rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework
   gem 'rspec-rails', '~> 3.8'
 
