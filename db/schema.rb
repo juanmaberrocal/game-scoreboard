@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_153323) do
+ActiveRecord::Schema.define(version: 2019_07_22_204809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.text "description"
     t.integer "min_players"
     t.integer "max_players"
@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(version: 2019_07_17_153323) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "min_play_time"
     t.integer "max_play_time"
-    t.string "slug"
+    t.string "slug", null: false
+    t.index ["slug"], name: "index_games_on_slug", unique: true
   end
 
   create_table "match_players", force: :cascade do |t|

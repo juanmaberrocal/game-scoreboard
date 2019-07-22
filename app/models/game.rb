@@ -8,16 +8,23 @@
 #  max_players   :integer
 #  min_play_time :integer
 #  min_players   :integer
-#  name          :string
-#  slug          :string
+#  name          :string           not null
+#  slug          :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#
+# Indexes
+#
+#  index_games_on_slug  (slug) UNIQUE
 #
 
 class Game < ApplicationRecord
   has_many :matches, -> { order 'matches.created_at DESC' }
 
-  before_save :slug_name, if: :will_save_change_to_name?
+  validates :name, :slug, presence: true
+  validates :slug, uniqueness: true
+
+  before_validation :slug_name, if: :will_save_change_to_name?
 
   def self.find_by_name(search_name)
     Game.find_by(slug: search_name.parameterize)
