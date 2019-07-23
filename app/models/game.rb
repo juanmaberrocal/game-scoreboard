@@ -22,7 +22,7 @@ class Game < ApplicationRecord
   has_many :matches, -> { order 'matches.created_at DESC' }
 
   validates :name, :slug, presence: true
-  validates :slug, uniqueness: true
+  validates :slug, uniqueness: { case_sensitive: false }
 
   before_validation :slug_name, if: :will_save_change_to_name?
 

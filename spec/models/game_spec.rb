@@ -1,16 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  it { is_expected.to have_many(:matches) }
-
-  it { is_expected.to validate_presence_of(:name) }
-  it { is_expected.to validate_presence_of(:slug) }
-  it { is_expected.to validate_uniqueness_of(:slug) }
-
   let(:foo_game) { create(:game, name: 'foo' )}
 
   let(:game_without_matches) { create(:game) }
   let(:game_with_matches) { create(:game_with_matches) }
+
+  context 'relations' do
+    it { is_expected.to have_many(:matches) }
+  end
+
+  context 'validations' do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:slug) }
+
+    context 'uniqueness' do
+      subject { foo_game }
+      it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
+    end
+  end
 
   context '#find_by_name' do
     it 'returns `nil` if no game found' do
