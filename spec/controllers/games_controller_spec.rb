@@ -23,7 +23,7 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe GamesController, type: :controller do
+RSpec.describe Api::V1::GamesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Game. As you add validations to Game, be sure to
