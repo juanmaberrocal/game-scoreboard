@@ -51,6 +51,9 @@ group :test do
 
   # Simple one-liner tests for common Rails functionality https://matchers.shoulda.io
   gem 'shoulda-matchers'
+
+  # RSpec results that your CI can read https://rubygems.org/gems/rspec_junit_formatter
+  gem 'rspec_junit_formatter'
 end
 
 group :development do
