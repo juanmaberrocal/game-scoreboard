@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Games", type: :request do
-  describe "GET /games" do
+RSpec.describe "MatchPlayers", type: :request do
+  describe "GET /match_players" do
     it "works! (now write some real specs)" do
-      get games_path
+      get v1_match_players_path
       expect(response).to have_http_status(200)
     end
   end
