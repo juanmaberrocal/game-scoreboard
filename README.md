@@ -1,6 +1,6 @@
 # GAME SCOREBOARD
 
-[![CircleCI](https://circleci.com/gh/juanmaberrocal/game-scoreboard.svg?style=svg)](https://circleci.com/gh/juanmaberrocal/game-scoreboard)
+[![CircleCI](https://circleci.com/gh/juanmaberrocal/game-scoreboard/tree/master.svg?style=svg)](https://circleci.com/gh/juanmaberrocal/game-scoreboard/tree/master)
 
 # README
 
