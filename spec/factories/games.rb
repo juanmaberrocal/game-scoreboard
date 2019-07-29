@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :game do
-    name { "MyString" }
+    name { Faker::Game.unique.title }
     description { "MyText" }
     min_players { 1 }
     max_players { 2 }
