@@ -15,9 +15,12 @@ class Player < ApplicationRecord
   has_many :match_players, inverse_of: :player
   has_many :matches, -> { order 'matches.created_at DESC' }, through: :match_players
 
+  validates :first_name, :last_name, :nickname, presence: true
+  validates :nickname, uniqueness: { case_sensitive: false }
+
   def self.find_by_name(search_name)
     Player.find_by(nickname: search_name) ||
-    Player.similar('first_name || last_name', search_name.capitalize).sample
+    Player.similar('first_name || last_name', search_name).sample
   end
 
   def self.standings
@@ -25,16 +28,16 @@ class Player < ApplicationRecord
                                                 .generate
   end
 
-  def player_name(full_name = false)
-    if full_name
-      full_name
-    else
-      nickname.capitalize
-    end
-  end
-
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def player_name(use_full_name = false)
+    if use_full_name
+      full_name
+    else
+      nickname
+    end
   end
 
   def last_match

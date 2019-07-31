@@ -9,7 +9,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def self.similar(column, value)
     records = self.all
-    records = records.where("#{column} LIKE ?", "%#{value.gsub(/\s+/, '%')}%")
+    records = records.where("#{column} ILIKE ?", "%#{value.gsub(/\s+/, '%')}%")
     records
   end
 end
