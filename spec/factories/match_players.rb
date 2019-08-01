@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :match_player do
-    match { nil }
-    player { nil }
+    match
+    player
     winner { false }
   end
 end

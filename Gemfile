@@ -43,6 +43,9 @@ group :development, :test do
 
   # factory_bot is a fixtures replacement with a straightforward definition syntax
   gem 'factory_bot_rails'
+
+  # A library for generating fake data such as names, addresses, and phone numbers.
+  gem 'faker'
 end
 
 group :test do

@@ -95,10 +95,10 @@ games.each do |g|
 end
 
 players = [
-  { first_name: 'Juan', last_name: 'Berrocal', nickname: 'juanma', birth_date: '' },
-  { first_name: 'Carolina', last_name: 'Navarrete', nickname: 'caro', birth_date: '' },
-  { first_name: 'Marina', last_name: 'Chevis', nickname: 'ma', birth_date: '' },
-  { first_name: 'Dulce', last_name: 'Casado', nickname: 'dul', birth_date: '' }
+  { first_name: 'Juan', last_name: 'Berrocal', nickname: 'juanma', email: '', birth_date: '' },
+  { first_name: 'Carolina', last_name: 'Navarrete', nickname: 'caro', email: '', birth_date: '' },
+  { first_name: 'Marina', last_name: 'Chevis', nickname: 'ma', email: '', birth_date: '' },
+  { first_name: 'Dulce', last_name: 'Casado', nickname: 'dul', email: '', birth_date: '' }
 ]
 
 players.each do |pl|

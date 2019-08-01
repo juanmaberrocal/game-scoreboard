@@ -31,7 +31,7 @@ class Game < ApplicationRecord
   end
 
   def self.find_by_similar_name(search_name)
-    Game.similar(:slug, search_name.downcase)
+    Game.similar(:slug, search_name)
   end
 
   def self.standings

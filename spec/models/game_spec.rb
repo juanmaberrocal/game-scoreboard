@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  let(:foo_game) { create(:game, name: 'foo' )}
+  let(:foo_game) { create(:game, name: 'foo') }
 
   let(:game_without_matches) { create(:game) }
   let(:game_with_matches) { create(:game_with_matches) }
