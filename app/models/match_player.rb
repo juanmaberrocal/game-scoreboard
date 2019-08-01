@@ -24,6 +24,8 @@ class MatchPlayer < ApplicationRecord
   belongs_to :match
   belongs_to :player
 
+  validates_associated :match, :player
+
   def player_name(full_name = false)
     player.player_name(full_name)
   end
