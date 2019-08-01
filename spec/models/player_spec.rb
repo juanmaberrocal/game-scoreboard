@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  let(:foo_player) { create(:player, first_name: 'foo', last_name: 'bar', nickname: 'foobar', email: 'foo@bar.com' )}
+  let(:foo_player) { create(:player, first_name: 'foo', last_name: 'bar', nickname: 'foobar', email: 'foo@bar.com') }
 
   let(:player_without_matches) { create(:player) }
   let(:player_with_matches) { create(:player_with_matches) }
