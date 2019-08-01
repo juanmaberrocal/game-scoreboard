@@ -22,6 +22,8 @@ class Match < ApplicationRecord
   has_many :match_players, -> { order 'match_players.winner DESC' }, inverse_of: :match, dependent: :destroy
   has_many :players, through: :match_players
 
+  validates_associated :game
+
   # results:
   # [
   #   { player_name: winner[1|0] },
