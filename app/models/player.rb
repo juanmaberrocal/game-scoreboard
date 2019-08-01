@@ -4,19 +4,26 @@
 #
 #  id         :bigint           not null, primary key
 #  birth_date :date
-#  first_name :string
-#  last_name  :string
-#  nickname   :string
+#  email      :string           not null
+#  first_name :string           not null
+#  last_name  :string           not null
+#  nickname   :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_players_on_email                     (email) UNIQUE
+#  index_players_on_first_name_and_last_name  (first_name,last_name)
+#  index_players_on_nickname                  (nickname) UNIQUE
 #
 
 class Player < ApplicationRecord
   has_many :match_players, inverse_of: :player
   has_many :matches, -> { order 'matches.created_at DESC' }, through: :match_players
 
-  validates :first_name, :last_name, :nickname, presence: true
-  validates :nickname, uniqueness: { case_sensitive: false }
+  validates :first_name, :last_name, :nickname, :email, presence: true
+  validates :nickname, :email, uniqueness: { case_sensitive: false }
 
   def self.find_by_name(search_name)
     Player.find_by(nickname: search_name) ||

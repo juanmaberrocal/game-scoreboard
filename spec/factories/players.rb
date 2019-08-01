@@ -1,9 +1,10 @@
 FactoryBot.define do
   factory :player do
-    first_name { Faker::Name.unique.first_name }
-    last_name { Faker::Name.unique.last_name }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
     birth_date { Faker::Date.birthday }
     nickname { Faker::FunnyName.unique.name }
+    email { Faker::Internet.unique.email }
 
     factory :player_with_matches do
       transient do

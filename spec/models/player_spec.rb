@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  let(:foo_player) { create(:player, first_name: 'foo', last_name: 'bar', nickname: 'foobar' )}
+  let(:foo_player) { create(:player, first_name: 'foo', last_name: 'bar', nickname: 'foobar', email: 'foo@bar.com' )}
 
   let(:player_without_matches) { create(:player) }
   let(:player_with_matches) { create(:player_with_matches) }
@@ -15,10 +15,12 @@ RSpec.describe Player, type: :model do
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:nickname) }
+    it { is_expected.to validate_presence_of(:email) }
 
     context 'uniqueness' do
       subject { foo_player }
       it { is_expected.to validate_uniqueness_of(:nickname).case_insensitive }
+      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     end
   end
 
