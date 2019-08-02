@@ -31,6 +31,9 @@ gem 'fast_jsonapi'
 # Simple, efficient background processing for Ruby http://sidekiq.org
 gem 'sidekiq'
 
+# Exception tracking and logging from Ruby to Rollbar https://docs.rollbar.com/docs/ruby
+gem 'rollbar'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
