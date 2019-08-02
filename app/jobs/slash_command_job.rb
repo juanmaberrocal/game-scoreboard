@@ -6,7 +6,6 @@ class SlashCommandJob < ApplicationJob
   rescue InvalidSlashCommand => e
     slack_post_error(response_url, user_id, e.message)
   rescue => e
-    Rollbar.error(e)
     slack_post_error(response_url, user_id)
   end
 
