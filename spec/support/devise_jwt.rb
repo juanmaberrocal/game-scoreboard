@@ -8,7 +8,7 @@ module JwtTestHelper
   def auth_headers(player = nil)
     headers = { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
     # This will add a valid token for `player` in the `Authorization` header
-    auth_headers = Devise::JWT::TestHelpers.auth_headers(headers, current_player)
+    auth_headers = Devise::JWT::TestHelpers.auth_headers(headers, current_player(player))
   end
 end
 
