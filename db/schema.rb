@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_135740) do
+ActiveRecord::Schema.define(version: 2019_08_20_140101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 2019_08_01_135740) do
     t.integer "max_play_time"
     t.string "slug", null: false
     t.index ["slug"], name: "index_games_on_slug", unique: true
+  end
+
+  create_table "jwt_blacklist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.index ["jti"], name: "index_jwt_blacklist_on_jti"
   end
 
   create_table "match_players", force: :cascade do |t|
@@ -53,9 +58,13 @@ ActiveRecord::Schema.define(version: 2019_08_01_135740) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "nickname", null: false
     t.string "email", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.index ["email"], name: "index_players_on_email", unique: true
     t.index ["first_name", "last_name"], name: "index_players_on_first_name_and_last_name"
     t.index ["nickname"], name: "index_players_on_nickname", unique: true
+    t.index ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   end
 
   add_foreign_key "match_players", "matches"
