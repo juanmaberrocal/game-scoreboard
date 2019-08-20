@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Matches", type: :request do
   describe "GET /matches" do
     it "works! (now write some real specs)" do
-      get v1_matches_path
+      get v1_matches_path, headers: auth_headers
       expect(response).to have_http_status(200)
     end
   end

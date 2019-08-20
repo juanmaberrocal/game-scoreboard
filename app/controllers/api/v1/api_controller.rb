@@ -1,8 +1,7 @@
 module Api
   module V1
     class ApiController < ApplicationController
-      # include ActionController::HttpAuthentication::Token::ControllerMethods
-
+      before_action :authenticate_player!
 
       def render(options = {})
         options[:json] = serializer.new(options[:json]) if serializer?
