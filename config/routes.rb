@@ -54,4 +54,8 @@ Rails.application.routes.draw do
              controllers: {
                sessions: 'sessions'
              }
+
+  devise_scope :player do
+    get 'renew', to: 'sessions#renew', as: :player_session_renew
+  end
 end
