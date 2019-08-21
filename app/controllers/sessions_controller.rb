@@ -1,8 +1,6 @@
 class SessionsController < Devise::SessionsController
   respond_to :json
 
-
-
   def renew
     authenticate_player!
     render json: current_player.to_json, status: 200
