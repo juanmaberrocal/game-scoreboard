@@ -4,8 +4,9 @@ module Api
       before_action :authenticate_player!
 
       def render(options = {})
-        options[:json] = serializer.new(options[:json]) if unserialzed?(options[:json].class) &&
-                                                           serializer?
+        options[:json] = serializer.new(options[:json],
+                                        options.reject { |k, _| k == :json }) if unserialzed?(options[:json].class) &&
+                                                                                 serializer?
         super(options)
       end
 
