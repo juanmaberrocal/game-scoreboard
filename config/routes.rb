@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  # concerns
+  concern :with_matches do
+    resources :matches, only: [:index, :show]
+  end
+
   # /api/
   # constraints subdomain: 'api' do
     scope module: 'api' do
       # /api/v1/
       namespace :v1 do
         # /api/v1/games
-        resources :games
+        resources :games, concerns: :with_matches
         
         # /api/v1/matches
         resources :matches
@@ -14,7 +19,7 @@ Rails.application.routes.draw do
         resources :match_players
 
         # /api/v1/players
-        resources :players
+        resources :players, concerns: :with_matches
 
         # /api/v1/slack_bot
         namespace :slack_bot do

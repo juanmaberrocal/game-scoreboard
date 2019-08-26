@@ -6,6 +6,7 @@ module Api
       # GET /match_players
       def index
         @match_players = MatchPlayer.all
+        @match_players = @match_players.where(player_id: params[:player_id]) if params[:player_id].present?
 
         render json: @match_players
       end

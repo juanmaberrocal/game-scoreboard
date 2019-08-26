@@ -7,7 +7,7 @@ module Api
       def index
         @games = Game.all
 
-        render json: @games
+        render json: @games, params: { public: params[:public] }
       end
 
       # GET /games/1

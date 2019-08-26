@@ -5,9 +5,20 @@ module Api
 
       # GET /matches
       def index
-        @matches = Match.all
+        if params[:game_id].present?
+          @game = Game.find_by(id: params[:game_id])
+          @matches = @game.matches
 
-        render json: @matches
+          render json: MatchSerializer.new(@matches, params: { game_id: params[:game_id] })
+        elsif params[:player_id].present?
+          @player = Player.find_by(id: params[:player_id])
+          @matches = @player.matches.select('matches.*', 'match_players.winner')
+
+          render json: MatchSerializer.new(@matches, params: { player_id: params[:player_id] })
+        else
+          @matches = Match.all
+          render json: @matches
+        end
       end
 
       # GET /matches/1

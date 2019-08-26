@@ -1,5 +1,21 @@
 require 'rails_helper'
 
+RSpec.shared_examples "Valid JWT Token" do
+  it 'returns 200' do
+    expect(response).to have_http_status(200)
+  end
+
+  it 'returns JWT token in header' do
+    expect(response.headers['Authorization']).to be_present
+  end
+
+  it 'returns valid JWT token' do
+    token_from_request = response.headers['Authorization'].split(' ').last
+    decoded_token = JWT.decode(token_from_request, ENV['DEVISE_JWT_SECRET_KEY'], true)
+    expect(decoded_token.first['sub']).to be_present
+  end
+end
+
 RSpec.describe "Sessions", type: :request do
   let(:player) { create(:player) }
   let(:params) do
@@ -11,23 +27,17 @@ RSpec.describe "Sessions", type: :request do
     }
   end
 
+  describe "GET /renew" do
+    context 'with valid authorization header' do
+      before(:each) { get player_session_renew_path, headers: auth_headers }
+      include_examples "Valid JWT Token"
+    end
+  end
+
   describe "POST /login" do
     context 'with correct params' do
       before(:each) { post player_session_path, params: params }
-
-      it 'returns 200' do
-        expect(response).to have_http_status(200)
-      end
-
-      it 'returns JWT token in header' do
-        expect(response.headers['Authorization']).to be_present
-      end
-
-      it 'returns valid JWT token' do
-        token_from_request = response.headers['Authorization'].split(' ').last
-        decoded_token = JWT.decode(token_from_request, ENV['DEVISE_JWT_SECRET_KEY'], true)
-        expect(decoded_token.first['sub']).to be_present
-      end
+      include_examples "Valid JWT Token"
     end
 
     context 'with incorrect params' do
