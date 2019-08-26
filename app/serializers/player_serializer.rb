@@ -1,5 +1,4 @@
-class PlayerSerializer
-  include FastJsonapi::ObjectSerializer
+class PlayerSerializer < FastJsonapiSerializer
   attributes :email,
              :first_name,
              :last_name,
