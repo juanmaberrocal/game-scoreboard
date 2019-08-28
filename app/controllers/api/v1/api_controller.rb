@@ -1,7 +1,7 @@
 module Api
   module V1
     class ApiController < ApplicationController
-      # before_action :authenticate_player!
+      before_action :authenticate_player!
 
       def render(options = {})
         options[:json] = serializer.new(options[:json],
