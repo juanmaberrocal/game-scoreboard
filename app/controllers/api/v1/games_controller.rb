@@ -1,7 +1,7 @@
 module Api
   module V1
     class GamesController < ApiController
-      before_action :set_game, only: [:show, :update, :destroy]
+      before_action :set_game, only: [:show, :standings, :update, :destroy]
 
       # GET /games
       def index
@@ -13,6 +13,10 @@ module Api
       # GET /games/1
       def show
         render json: @game
+      end
+
+      def standings
+        render json: StandingsSerializer.new(@game)
       end
 
       # POST /games

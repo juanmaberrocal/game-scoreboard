@@ -1,7 +1,7 @@
 module Api
   module V1
     class PlayersController < ApiController
-      before_action :set_player, only: [:show, :update, :destroy]
+      before_action :set_player, only: [:show, :standings, :update, :destroy]
 
       # GET /players
       def index
@@ -13,6 +13,10 @@ module Api
       # GET /players/1
       def show
         render json: @player
+      end
+
+      def standings
+        render json: StandingsSerializer.new(@player)
       end
 
       # POST /players
