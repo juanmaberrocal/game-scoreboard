@@ -4,22 +4,29 @@ Rails.application.routes.draw do
     resources :matches, only: [:index, :show]
   end
 
+  concern :with_standings do
+    get 'standings', on: :member
+  end
+
   # /api/
   # constraints subdomain: 'api' do
     scope module: 'api' do
       # /api/v1/
       namespace :v1 do
         # /api/v1/games
-        resources :games, concerns: :with_matches
+        resources :games, concerns: %i[
+          with_matches
+          with_standings
+        ]
         
         # /api/v1/matches
         resources :matches
 
-        # /api/v1/match_players
-        resources :match_players
-
         # /api/v1/players
-        resources :players, concerns: :with_matches
+        resources :players, concerns: %i[
+          with_matches
+          with_standings
+        ]
 
         # /api/v1/slack_bot
         namespace :slack_bot do

@@ -10,6 +10,9 @@ RSpec.describe Api::V1::GamesController, type: :routing do
       expect(:get => "/v1/games/1").to route_to("api/v1/games#show", :id => "1")
     end
 
+    it "routes to #standings" do
+      expect(:get => "/v1/games/1/standings").to route_to("api/v1/games#standings", :id => "1")
+    end
 
     it "routes to #create" do
       expect(:post => "/v1/games").to route_to("api/v1/games#create")
