@@ -69,8 +69,4 @@ class Player < ApplicationRecord
     StandingsGenerators::PlayerStandingsService.new(self)
                                                .generate
   end
-
-  # def avatar_url
-  #   p 'somsoemsomsoosms'
-  # end
 end
