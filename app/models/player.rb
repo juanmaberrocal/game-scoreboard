@@ -31,6 +31,8 @@ class Player < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtBlacklist
 
+  has_one_attached :avatar
+
   has_many :match_players, inverse_of: :player
   has_many :matches, -> { order 'matches.created_at DESC' }, through: :match_players
 
@@ -67,4 +69,8 @@ class Player < ApplicationRecord
     StandingsGenerators::PlayerStandingsService.new(self)
                                                .generate
   end
+
+  # def avatar_url
+  #   p 'somsoemsomsoosms'
+  # end
 end
