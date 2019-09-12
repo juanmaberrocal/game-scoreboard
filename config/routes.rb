@@ -69,5 +69,6 @@ Rails.application.routes.draw do
 
   devise_scope :player do
     get 'renew', to: 'sessions#renew', as: :player_session_renew
+    post 'update_password', to: 'sessions#update_password', as: :player_session_update_password
   end
 end
