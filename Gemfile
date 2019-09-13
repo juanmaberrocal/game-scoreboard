@@ -24,6 +24,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # JWT token authentication with devise and rails
+gem "devise", ">= 4.7.1"
 gem 'devise-jwt', '~> 0.5.9'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
