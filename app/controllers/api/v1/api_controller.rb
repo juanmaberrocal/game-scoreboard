@@ -2,7 +2,7 @@ module Api
   module V1
     class ApiController < ApplicationController
       before_action :authenticate_player!
-      before_action :validate_request
+      before_action :validate_request!
 
       rescue_from GeneralApiError, with: :handle_api_error
       rescue_from ApiError::InvalidParams, with: :handle_invalid_api_params
@@ -20,7 +20,7 @@ module Api
       private
 
       # params validation helpers
-      def validate_request
+      def validate_request!
         return unless respond_to?("validate_#{params[:action]}".to_sym, true)
         send("validate_#{params[:action]}".to_sym)
       end
