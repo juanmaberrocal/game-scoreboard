@@ -38,7 +38,7 @@ module Api
                  status: :created
         else
           if @match.present?
-            render json: @match.errors, status: :unprocessable_entity, error: true
+            raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @match.errors)
           else
             raise GeneralApiError.new(params[:controller], params[:action],
                                       'Match could not be recorded. '\

@@ -1,11 +1,10 @@
 module Api
   module V1
     class ApiController < ApplicationController
+      include ApiErrorHandling
+
       before_action :authenticate_player!
       before_action :validate_request!
-
-      rescue_from GeneralApiError, with: :handle_api_error
-      rescue_from ApiError::InvalidParams, with: :handle_invalid_api_params
 
       def render(options = {})
         unless options[:error]
@@ -62,19 +61,6 @@ module Api
       
       def unserialzed?(klass)
         !(klass < FastJsonapiSerializer)
-      end
-
-      # error rescues
-      def handle_invalid_api_params(exception)
-        render json: { error: exception.message }, 
-               status: :bad_request,
-               error: true
-      end
-
-      def handle_api_error(exception)
-        render json: { error: exception.message },
-               status: :internal_server_error,
-               error: true
       end
     end
   end
