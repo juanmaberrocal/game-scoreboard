@@ -39,7 +39,9 @@ RSpec.describe Api::V1::MatchesController, type: :controller do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # MatchesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { request.headers.merge!(auth_headers) }
+
+  before(:each) { valid_session }
 
   describe "GET #index" do
     it "returns a success response" do
@@ -59,27 +61,48 @@ RSpec.describe Api::V1::MatchesController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+      let(:valid_create_params) {
+        {
+          game_name: create(:game).name,
+          results: [
+            { create(:player).nickname => true }
+          ]
+        }
+      }
+
       it "creates a new Match" do
         expect {
-          post :create, params: {match: valid_attributes}, session: valid_session
+          post :create, params: { match: valid_create_params }
         }.to change(Match, :count).by(1)
       end
 
-      it "renders a JSON response with the new match" do
-
-        post :create, params: {match: valid_attributes}, session: valid_session
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(match_url(Match.last))
+      it "creates a new MatchPlayer" do
+        expect {
+          post :create, params: { match: valid_create_params }
+        }.to change(MatchPlayer, :count).by(1)
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the new match" do
+      let(:invalid_create_params) {
+        {
+          game_name: 'foo',
+          results: [
+            { 'bar' => true }
+          ]
+        }
+      }
 
-        post :create, params: {match: invalid_attributes}, session: valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+      it "does not creates a new Match" do
+        expect {
+          post :create, params: { match: invalid_create_params }
+        }.to_not change(Match, :count)
+      end
+
+      it "does not create a new MatchPlayer" do
+        expect {
+          post :create, params: { match: invalid_create_params }
+        }.to_not change(MatchPlayer, :count)
       end
     end
   end
