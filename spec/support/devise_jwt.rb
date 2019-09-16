@@ -13,5 +13,6 @@ module JwtTestHelper
 end
 
 RSpec.configure do |config|
-  config.include JwtTestHelper, type: :request
+  %i[request controller].each { |type| config.include JwtTestHelper, type: type }
+  config.include Devise::Test::ControllerHelpers, type: :controller
 end
