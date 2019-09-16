@@ -63,10 +63,10 @@ RSpec.describe Api::V1::MatchesController, type: :controller do
     context "with valid params" do
       let(:valid_create_params) {
         {
-          game_name: create(:game).name,
-          results: [
-            { create(:player).nickname => true }
-          ]
+          game_id: create(:game).id,
+          results: { 
+            create(:player).id => true
+          }
         }
       }
 
@@ -86,10 +86,10 @@ RSpec.describe Api::V1::MatchesController, type: :controller do
     context "with invalid params" do
       let(:invalid_create_params) {
         {
-          game_name: 'foo',
-          results: [
-            { 'bar' => true }
-          ]
+          game_id: 0,
+          results: {
+            '0' => true
+          }
         }
       }
 

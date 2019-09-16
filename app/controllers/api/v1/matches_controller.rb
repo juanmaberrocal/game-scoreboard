@@ -28,22 +28,14 @@ module Api
 
       # POST /matches
       def create
-        game    = match_params[:game_name]
-        results = match_params[:results].map { |r| r.to_h }
+        @match = Match.initialize_with_results(match_params[:game_id], 
+                                               match_params[:results].to_hash)
 
-        @match = Match.initialize_with_results(game, results)
-
-        if @match&.save
+        if @match.save
           render json: MatchSerializer.new(@match, params: { with_results: true }),
                  status: :created
         else
-          if @match.present?
-            raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @match.errors)
-          else
-            raise GeneralApiError.new(params[:controller], params[:action],
-                                      'Match could not be recorded. '\
-                                      'Make sure the game and players selected are correct.')
-          end
+          raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @match.errors)
         end
       end
 
@@ -69,14 +61,14 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def match_params
-          results_keys = params[:match][:results].map { |r| r.keys }.flatten
-          params.require(:match).permit(:game_name, results: results_keys)
+          results_keys = params[:match][:results].keys
+          params.require(:match).permit(:game_id, results: results_keys)
         end
 
         def validate_create
           validations = {
-            game_name: [:required, String],
-            results: [:required, Array]
+            game_id: [:required, Integer],
+            results: [:required, Hash]
           }
 
           validate_params(validations)

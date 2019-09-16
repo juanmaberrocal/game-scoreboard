@@ -15,10 +15,10 @@ RSpec.describe "Matches", type: :request do
     let(:url) { v1_matches_path }
     let(:valid_params) do
       {
-        game_name: game.name,
-        results: [
-          { player.nickname => true }
-        ]
+        game_id: game.id,
+        results: {
+          player.id.to_s => true
+        }
       }
     end
 
@@ -40,38 +40,38 @@ RSpec.describe "Matches", type: :request do
         end
       end
 
-      include_examples("Create Request", :post, :match, :game_name)
+      include_examples("Create Request", :post, :match)
     end
 
     context 'invalid' do
-      context '`game_name` param' do
+      context '`game_id` param' do
         context 'game does not exist' do
           it 'returns `internal_server_error`' do
-            valid_params[:game_name] = 'foo'
+            valid_params[:game_id] = 0
             post url, params: { match: valid_params }.to_json, headers: auth_headers
-            expect(response).to have_http_status(:internal_server_error)
+            expect(response).to have_http_status(:unprocessable_entity)
           end
 
           include_examples("API Error")
         end
 
-        include_examples("Bad Request", :post, :match, :game_name)
-        include_examples("Bad Request", :post, :match, :game_name, 1)
+        include_examples("Bad Request", :post, :match, :game_id)
+        include_examples("Bad Request", :post, :match, :game_id, 'foo')
       end
 
       context '`results` param' do
         context 'player does not exist' do
           it 'returns `internal_server_error`' do
-            valid_params[:results] = [{ 'foo' => true }]
+            valid_params[:results] = { 0 => true }
             post url, params: { match: valid_params }.to_json, headers: auth_headers
-            expect(response).to have_http_status(:internal_server_error)
+            expect(response).to have_http_status(:unprocessable_entity)
           end
 
           include_examples("API Error")
         end
 
         include_examples("Bad Request", :post, :match, :results)
-        include_examples("Bad Request", :post, :match, :results, {})
+        include_examples("Bad Request", :post, :match, :results, [])
       end
     end
   end

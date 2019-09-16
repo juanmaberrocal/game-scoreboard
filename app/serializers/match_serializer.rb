@@ -12,10 +12,10 @@ class MatchSerializer < FastJsonapiSerializer
   attribute :results, if: Proc.new { |match, params|
     params[:with_results].present?
   } do |match, _params|
-    match.match_players.includes(:player).map do |match_player|
-      {
-        match_player.player_name => match_player.winner
-      }
+    {}.tap do |results_hash|
+      match.match_players.each do |match_player|
+        results_hash[match_player.player_id] = match_player.winner
+      end
     end
   end
 end
