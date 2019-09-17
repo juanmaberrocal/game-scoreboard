@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Matches", type: :request do
+RSpec.describe "V1/Matches", type: :request do
   describe "GET /matches" do
     it "works! (now write some real specs)" do
       get v1_matches_path, headers: auth_headers
