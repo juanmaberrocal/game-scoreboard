@@ -23,6 +23,8 @@ RSpec.describe "V2/SlashCommand", type: :request do
 
       context 'failed with invalid authentication' do
         it 'returns `text` as `InvalidSlackRequest#message`' do
+          allow_any_instance_of(SlackRequestAuthenticator).to receive(:authenticate!).and_raise(InvalidSlackRequest)
+          
           post v2_slash_command_game_scoreboard_path, params: params, headers: headers
           expect(json_body['text']).to eq(InvalidSlackRequest.new.message)
         end
