@@ -24,10 +24,11 @@ class Match < ApplicationRecord
 
   validates_associated :game
 
+  # game_id: int
   # results:
   # {
-  #   player_name: winner[1|0],
-  #   player_name: winner[1|0],
+  #   player_id: winner[1|0],
+  #   player_id: winner[1|0],
   #   ...
   # }
   def self.initialize_with_results(game_id, results = {})
