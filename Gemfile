@@ -66,6 +66,9 @@ group :test do
 
   # RSpec results that your CI can read https://rubygems.org/gems/rspec_junit_formatter
   gem 'rspec_junit_formatter'
+
+  # Library for stubbing and setting expectations on HTTP requests in Ruby.
+  gem 'webmock'
 end
 
 group :development do
