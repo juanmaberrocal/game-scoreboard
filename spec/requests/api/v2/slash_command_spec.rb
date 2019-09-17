@@ -93,12 +93,6 @@ RSpec.describe "V2/SlashCommand", type: :request do
               }
             end
 
-            it 'enqueues `SlashCommandActionJob` job' do
-              expect {
-                post v2_slash_command_game_scoreboard_path, params: params, headers: headers
-              }.to have_enqueued_job(SlashCommandActionJob)
-            end
-
             it 'returns `text` as `default success message`' do
               post v2_slash_command_game_scoreboard_path, params: params, headers: headers
               expect(json_body['text']).to eq(default_success_text)
