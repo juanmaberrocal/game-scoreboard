@@ -13,30 +13,36 @@ RSpec.describe Match, type: :model do
     let(:foo_game) { create(:game) }
     let(:foo_players) { create_list(:player, 2) }
     let(:foo_results) do
-      foo_players.map { |foo_player| { foo_player.nickname => false } }
+      {}.tap do |results_hash|
+        foo_players.each do |foo_player|
+          results_hash[foo_player.id] = false
+        end
+      end
     end
 
     context '#initialize_with_results' do
-      it 'returns `nil` if game not found (by name)' do
-        expect(Match.initialize_with_results('foo_game')).to eq(nil)
+      it 'returns valid match record' do
+        expect(Match.initialize_with_results(foo_game.id, foo_results).valid?).to eq(true)
       end
 
-      it 'returns `nil` if player not found (by name)' do
-        expect(Match.initialize_with_results(foo_game.name, [{ foo_player: true }])).to eq(nil)
-      end
+      context 'returns invalid match record' do
+        it 'if game not found' do
+          expect(Match.initialize_with_results(0, foo_results).valid?).to eq(false)
+        end
 
-      it 'returns match record if results built succesfully' do
-        expect(Match.initialize_with_results(foo_game.name, foo_results)).to be_instance_of(Match)
+        it 'if results player not found' do
+          expect(Match.initialize_with_results(foo_game.id, { 0 => true }).valid?).to eq(false)
+        end
       end
     end
 
     context '#create_with_results' do
       it 'creates match results' do
-        expect { Match.create_with_results(foo_game.name, foo_results) }.to change { Match.count }.by(1)
+        expect { Match.create_with_results(foo_game.id, foo_results) }.to change { Match.count }.by(1)
       end
 
       it 'creates match player results' do
-        expect { Match.create_with_results(foo_game.name, foo_results) }.to change { MatchPlayer.count }.by(foo_results.length)
+        expect { Match.create_with_results(foo_game.id, foo_results) }.to change { MatchPlayer.count }.by(foo_results.length)
       end
     end
   end

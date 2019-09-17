@@ -24,32 +24,21 @@ class Match < ApplicationRecord
 
   validates_associated :game
 
+  # game_id: int
   # results:
-  # [
-  #   { player_name: winner[1|0] },
-  #   { player_name: winner[1|0] }
+  # {
+  #   player_id: winner[1|0],
+  #   player_id: winner[1|0],
   #   ...
-  # ]
-  def self.initialize_with_results(game_name, results = [])
-    game = Game.find_by_name(game_name)
-    return nil unless game.present?
+  # }
+  def self.initialize_with_results(game_id, results = {})
+    match = Match.new(game_id: game_id)
 
-    match = Match.new(game: game)
-
-    results.each do |result|
-      player_name, winner = result.flatten.map(&:to_s)
-
-      player = Player.find_by_name(player_name)
-      return unless player.present?
-
-      match.match_players.build(player: player, winner: winner.to_bool)
+    results.each do |player_id, winner|
+      match.match_players.build(player_id: player_id, winner: winner)
     end
 
-    if match.match_players.size == results.size
-      match
-    else
-      nil
-    end
+    match
   end
 
   def self.create_with_results(game_name, results = [])

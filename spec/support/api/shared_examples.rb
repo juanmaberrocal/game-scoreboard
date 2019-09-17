@@ -57,4 +57,23 @@ module Api::SharedExamples
 
     include_examples("API Error")
   end
+
+  # Slackbot API
+  RSpec.shared_examples "Slack API Response" do
+    before(:each) do
+      post v2_slash_command_game_scoreboard_path, params: params, headers: headers
+    end
+
+    it 'returns `response_type` as `ephemeral`' do
+      expect(json_body['response_type']).to eq(response_type)
+    end
+
+    it "returns ok" do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns `application/json`' do
+      expect(response.content_type).to eq('application/json')
+    end
+  end
 end

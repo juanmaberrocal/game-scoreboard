@@ -34,7 +34,11 @@ module Api
                             when :required
                               param unless params_root[param].present?
                             else
-                              param unless params_root[param].is_a?(validation)
+                              if validation == Hash
+                                param unless params_root[param].is_a?(ActionController::Parameters)
+                              else
+                                param unless params_root[param].is_a?(validation)
+                              end
                             end
 
             break if invalid_param.present?
