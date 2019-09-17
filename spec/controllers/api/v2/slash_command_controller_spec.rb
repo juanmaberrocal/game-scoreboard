@@ -55,11 +55,12 @@ RSpec.describe Api::V2::SlashCommandController, type: :controller do
       %w[add view].each do |action|
         %w[game games player players match].each do |model|
           context "#{action}:#{model}" do
+            let(:response_url) { 'https://stub.webmock.com/slack_url' }
             let(:params) do
               {
                 command: command,
                 text: "#{action}:#{model}",
-                response_url: 'example.com',
+                response_url: response_url,
                 user_id: 'foo'
               }
             end
