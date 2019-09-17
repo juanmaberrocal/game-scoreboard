@@ -22,7 +22,7 @@ RSpec.describe Match, type: :model do
 
     context '#initialize_with_results' do
       it 'returns valid match record' do
-        expect(Match.initialize_with_results(foo_game.id, foo_results).valid).to eq(true)
+        expect(Match.initialize_with_results(foo_game.id, foo_results).valid?).to eq(true)
       end
 
       context 'returns invalid match record' do
