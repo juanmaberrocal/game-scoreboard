@@ -5,7 +5,7 @@ module Api
 
       # GET /players
       def index
-        @players = Player.all
+        @players = Player.with_attached_avatar
 
         render json: @players, params: { public: params[:public] }
       end

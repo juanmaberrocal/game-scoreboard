@@ -8,7 +8,6 @@ class PlayerSerializer < FastJsonapiSerializer
   }
 
   attribute :avatar_url, if: Proc.new { |player, params|
-    params[:public]&.to_bool.blank? &&
     player.avatar.attached?
   } do |player|
     if Rails.env.production?
