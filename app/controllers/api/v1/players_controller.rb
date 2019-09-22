@@ -5,7 +5,7 @@ module Api
 
       # GET /players
       def index
-        @players = Player.all
+        @players = Player.with_attached_avatar
 
         render json: @players, params: { public: params[:public] }
       end
@@ -35,7 +35,7 @@ module Api
         if @player.update(player_params)
           render json: @player
         else
-          render json: @player.errors, status: :unprocessable_entity
+          raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @player.errors)
         end
       end
 

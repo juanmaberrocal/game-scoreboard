@@ -11,6 +11,7 @@
 #  nickname               :string           not null
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :integer          default(1), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -38,6 +39,8 @@ class Player < ApplicationRecord
 
   validates :first_name, :last_name, :nickname, :email, presence: true
   validates :nickname, :email, uniqueness: { case_sensitive: false }
+
+  enum role: [:admin, :player]
 
   def self.find_by_name(search_name)
     Player.find_by(nickname: search_name) ||

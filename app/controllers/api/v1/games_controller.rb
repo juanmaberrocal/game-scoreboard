@@ -5,7 +5,7 @@ module Api
 
       # GET /games
       def index
-        @games = Game.all
+        @games = Game.with_attached_avatar
 
         render json: @games, params: { public: params[:public] }
       end
@@ -35,7 +35,7 @@ module Api
         if @game.update(game_params)
           render json: @game
         else
-          render json: @game.errors, status: :unprocessable_entity
+          raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @game.errors)
         end
       end
 
@@ -52,7 +52,10 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def game_params
-          params.require(:game).permit(:name, :description, :min_players, :max_players, :min_play_time, :max_play_time)
+          params.require(:game).permit(:name, :description, 
+                                       :min_players, :max_players,
+                                       :min_play_time, :max_play_time,
+                                       :avatar)
         end
     end
   end
