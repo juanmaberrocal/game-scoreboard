@@ -35,7 +35,7 @@ module Api
         if @game.update(game_params)
           render json: @game
         else
-          render json: @game.errors, status: :unprocessable_entity
+          raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @game.errors)
         end
       end
 
