@@ -11,7 +11,7 @@ class GameSerializer < FastJsonapiSerializer
 
   attribute :avatar_url, if: Proc.new { |game, params|
     game.avatar.attached?
-  } do |player|
+  } do |game|
     if Rails.env.production?
       game.avatar.variant(resize_to_limit: [200, 100]).processed.service_url
     else
