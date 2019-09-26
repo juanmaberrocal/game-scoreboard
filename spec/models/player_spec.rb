@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'cancan/matchers'
 
 RSpec.describe Player, type: :model do
+  let(:player) { create(:player) }
+  let(:admin_player) { create(:player, role: 'admin') }
   let(:foo_player) { create(:player, first_name: 'foo', last_name: 'bar', nickname: 'foobar', email: 'foo@bar.com') }
 
   let(:player_without_matches) { create(:player) }
@@ -21,6 +24,53 @@ RSpec.describe Player, type: :model do
       subject { foo_player }
       it { is_expected.to validate_uniqueness_of(:nickname).case_insensitive }
       it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+    end
+  end
+
+  context 'abilities' do
+    subject(:ability) { Ability.new(user) }
+    let(:user) { nil }
+
+    context 'not logged in' do
+      %w[game match player].each do |model|
+        context "to handle `#{model.classify}`" do
+          %i[read create update delete].each do |action|
+            it { is_expected.to_not be_able_to(action, model.classify.constantize.new) }
+          end
+        end
+      end
+    end
+
+    context 'logged in as player' do
+      let(:user) { player }
+
+      it { is_expected.to be_able_to(:create, Match.new) }
+      it { is_expected.to be_able_to(:update, player) }
+
+      %w[game match player].each do |model|
+        context "to handle `#{model.classify}`" do
+          %i[read].each do |action|
+            it { is_expected.to be_able_to(action, model.classify.constantize.new) }
+          end
+
+          %i[create update delete].each do |action|
+            next if action == :create && model == 'match'
+            it { is_expected.to_not be_able_to(action, model.classify.constantize.new) }
+          end
+        end
+      end
+    end
+
+    context 'logged in as admin' do
+      let(:user) { admin_player }
+
+      %w[game match player].each do |model|
+        context "to handle `#{model.classify}`" do
+          %i[read create update delete].each do |action|
+            it { is_expected.to be_able_to(action, model.classify.constantize.new) }
+          end
+        end
+      end
     end
   end
 
