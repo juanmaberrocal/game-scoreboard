@@ -5,6 +5,8 @@ module ApiErrorHandling
     rescue_from GeneralApiError, with: :handle_general_error
     rescue_from ApiError::InvalidParams, with: :handle_invalid_params
     rescue_from ApiError::UnprocessableEntity, with: :handle_unprocessable_entity
+    
+    rescue_from CanCan::Unauthorized, with: :handle_can_can_unauthorized
   end
 
   private
@@ -27,6 +29,13 @@ module ApiErrorHandling
     api_rollbar(exception)
     render json: { error: exception.message },
            status: :unprocessable_entity,
+           error: true
+  end
+
+  def handle_can_can_unauthorized(exception)
+    api_rollbar(exception)
+    render json: { error: exception.message },
+           status: :unauthorized,
            error: true
   end
 

@@ -6,6 +6,8 @@ module Api
       before_action :authenticate_player!
       before_action :validate_request!
 
+      check_authorization
+
       def render(options = {})
         unless options[:error]
           options[:json] = serializer.new(options[:json],
