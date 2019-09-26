@@ -23,6 +23,12 @@ module Api
 
       private
 
+      # cancan role authorization
+      def authorize_request!
+        klass = controller_name.singularize.camelize.safe_constantize
+        authorize! params[:action].to_sym, klass
+      end
+
       # params validation helpers
       def validate_request!
         return unless respond_to?("validate_#{params[:action]}".to_sym, true)
@@ -56,12 +62,6 @@ module Api
                                           params[:action],
                                           invalid_param,
                                           params_root[invalid_param]) if invalid_param.present?
-      end
-
-      # cancan role authorization
-      def authorize_request!
-        klass = controller_name.singularize.camelize.safe_constantize
-        authorize! params[:action].to_sym, klass
       end
 
       # fast_jsonapi Serializer helpers
