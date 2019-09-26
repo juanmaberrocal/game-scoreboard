@@ -1,6 +1,8 @@
 module Api
   module V1
     class SlackBotController < ApplicationController
+      skip_authorization_check
+
       # Add a before_action to authenticate all requests
       before_action :authenticate
 
