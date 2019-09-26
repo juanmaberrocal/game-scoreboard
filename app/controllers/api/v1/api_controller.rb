@@ -3,9 +3,12 @@ module Api
     class ApiController < ApplicationController
       include ApiErrorHandling
 
+      alias_method :current_user, :current_player
+
       before_action :authenticate_player!
       before_action :validate_request!
 
+      before_action :authorize_request!
       check_authorization
 
       def render(options = {})
@@ -53,6 +56,12 @@ module Api
                                           params[:action],
                                           invalid_param,
                                           params_root[invalid_param]) if invalid_param.present?
+      end
+
+      # cancan role authorization
+      def authorize_request!
+        klass = controller_name.singularize.camelize.safe_constantize
+        authorize! params[:action].to_sym, klass
       end
 
       # fast_jsonapi Serializer helpers

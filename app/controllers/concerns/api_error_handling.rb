@@ -6,7 +6,7 @@ module ApiErrorHandling
     rescue_from ApiError::InvalidParams, with: :handle_invalid_params
     rescue_from ApiError::UnprocessableEntity, with: :handle_unprocessable_entity
     
-    rescue_from CanCan::Unauthorized, with: :handle_can_can_unauthorized
+    rescue_from CanCan::AccessDenied, with: :handle_can_can_unauthorized
   end
 
   private
