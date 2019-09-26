@@ -6,9 +6,9 @@ module Api
       alias_method :current_user, :current_player
 
       before_action :authenticate_player!
+      before_action :authorize_request!
       before_action :validate_request!
 
-      before_action :authorize_request!
       check_authorization
 
       def render(options = {})
