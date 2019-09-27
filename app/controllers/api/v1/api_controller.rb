@@ -3,8 +3,13 @@ module Api
     class ApiController < ApplicationController
       include ApiErrorHandling
 
+      alias_method :current_user, :current_player
+
       before_action :authenticate_player!
+      before_action :authorize_request!
       before_action :validate_request!
+
+      check_authorization
 
       def render(options = {})
         unless options[:error]
@@ -17,6 +22,12 @@ module Api
       end
 
       private
+
+      # cancan role authorization
+      def authorize_request!
+        klass = controller_name.singularize.camelize.safe_constantize
+        authorize! params[:action].to_sym, klass
+      end
 
       # params validation helpers
       def validate_request!

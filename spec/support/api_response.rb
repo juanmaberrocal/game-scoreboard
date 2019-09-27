@@ -8,7 +8,7 @@ module ApiResponse
   end
 
   def json_id
-    json_data['id']
+    json_data['id'].to_i
   end
 
   def json_attributes

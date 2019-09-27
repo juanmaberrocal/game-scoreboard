@@ -32,6 +32,8 @@ module Api
 
       # PATCH/PUT /players/1
       def update
+        authorize! :update, @player
+
         if @player.update(player_params)
           render json: @player
         else
@@ -53,7 +55,7 @@ module Api
         # Only allow a trusted parameter "white list" through.
         def player_params
           params.require(:player).permit(:first_name, :last_name, :email,
-                                         :nickname, :birth_date, :avatar)
+                                         :nickname, :avatar)
         end
     end
   end
