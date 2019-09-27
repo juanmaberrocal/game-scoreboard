@@ -94,6 +94,24 @@ module Api::SharedExamples
     include_examples("API Error")
   end
 
+  RSpec.shared_examples "Forbidden" do |request, param_key|
+    before(:each) do
+      params = if param_key.present?
+                 { param_key => valid_params }
+               else 
+                valid_params
+               end
+
+      send(request, url, params: params.to_json, headers: (headers || auth_headers))
+    end
+
+    it "returns forbidden if current user not authorized for action" do
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    include_examples("API Error")
+  end
+
   RSpec.shared_examples "Bad Request" do |request, param_key, invalid_param, invalid_param_value|
     before(:each) do
       if invalid_param_value.present?
