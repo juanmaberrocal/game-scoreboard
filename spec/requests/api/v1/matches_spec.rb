@@ -40,7 +40,7 @@ RSpec.describe "V1/Matches", type: :request do
         end
       end
 
-      include_examples("Create Request", :post, :match)
+      include_examples("Create Request", :match)
     end
 
     context 'invalid' do

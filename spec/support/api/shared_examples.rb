@@ -7,7 +7,7 @@ module Api::SharedExamples
   end
 
   # Valid API
-  RSpec.shared_examples "Create Request" do |request, param_key|
+  RSpec.shared_examples "Get Request" do |param_key|
     before(:each) do
       params = if param_key.present?
                  { param_key => valid_params }
@@ -15,11 +15,47 @@ module Api::SharedExamples
                 valid_params
                end
 
-      send(request, url, params: params.to_json, headers: auth_headers)
+      send(:get, url, params: params.to_json, headers: auth_headers)
     end
 
-    it "returns created" do
+    it "returns `ok`" do
+      expect(response).to have_http_status(:ok)
+    end
+
+    include_examples("API Response")
+  end
+
+  RSpec.shared_examples "Create Request" do |param_key|
+    before(:each) do
+      params = if param_key.present?
+                 { param_key => valid_params }
+               else 
+                valid_params
+               end
+
+      send(:post, url, params: params.to_json, headers: auth_headers)
+    end
+
+    it "returns `created`" do
       expect(response).to have_http_status(:created)
+    end
+
+    include_examples("API Response")
+  end
+
+  RSpec.shared_examples "Update Request" do |param_key|
+    before(:each) do
+      params = if param_key.present?
+                 { param_key => valid_params }
+               else 
+                valid_params
+               end
+
+      send(:put, url, params: params.to_json, headers: auth_headers)
+    end
+
+    it "returns `ok`" do
+      expect(response).to have_http_status(:ok)
     end
 
     include_examples("API Response")
@@ -32,6 +68,24 @@ module Api::SharedExamples
     end
 
     include_examples("API Response")
+  end
+
+  RSpec.shared_examples "Not Found" do |request, param_key|
+    before(:each) do
+      params = if param_key.present?
+                 { param_key => valid_params }
+               else 
+                valid_params
+               end
+
+      send(request, url, params: params.to_json, headers: auth_headers)
+    end
+
+    it "returns not_found if no record found" do
+      expect(response).to have_http_status(:not_found)
+    end
+
+    include_examples("API Error")
   end
 
   RSpec.shared_examples "Bad Request" do |request, param_key, invalid_param, invalid_param_value|
