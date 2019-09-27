@@ -65,8 +65,6 @@ RSpec.describe "V1/Players", type: :request do
         }.each do |attribute, value|
           it "returns updated `#{attribute}` as `#{value}`" do
             put url, params: { player: { attribute => value } }.to_json, headers: auth_headers(player)
-
-            player.reload
             expect(json_attribute(attribute)).to eq(value)
           end
         end
@@ -79,8 +77,6 @@ RSpec.describe "V1/Players", type: :request do
         }.each do |attribute, value|
           it "does not return updated `#{attribute}` as `#{value}`" do
             put url, params: { player: { attribute => value } }.to_json, headers: auth_headers(player)
-
-            player.reload
             expect(json_attribute(attribute)).to_not eq(value)
           end
         end
