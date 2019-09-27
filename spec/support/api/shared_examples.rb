@@ -8,57 +8,63 @@ module Api::SharedExamples
 
   # Valid API
   RSpec.shared_examples "Get Request" do |param_key|
-    before(:each) do
-      params = if param_key.present?
-                 { param_key => valid_params }
-               else 
-                valid_params
-               end
+    context 'get request' do
+      before(:each) do
+        params = if param_key.present?
+                   { param_key => valid_params }
+                 else 
+                  valid_params
+                 end
 
-      send(:get, url, params: params.to_json, headers: auth_headers)
+        send(:get, url, params: params.to_json, headers: auth_headers)
+      end
+
+      it "returns `ok`" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      include_examples("API Response")
     end
-
-    it "returns `ok`" do
-      expect(response).to have_http_status(:ok)
-    end
-
-    include_examples("API Response")
   end
 
   RSpec.shared_examples "Create Request" do |param_key|
-    before(:each) do
-      params = if param_key.present?
-                 { param_key => valid_params }
-               else 
-                valid_params
-               end
+    context 'create request' do
+      before(:each) do
+        params = if param_key.present?
+                   { param_key => valid_params }
+                 else 
+                  valid_params
+                 end
 
-      send(:post, url, params: params.to_json, headers: auth_headers)
+        send(:post, url, params: params.to_json, headers: auth_headers)
+      end
+
+      it "returns `created`" do
+        expect(response).to have_http_status(:created)
+      end
+
+      include_examples("API Response")
     end
-
-    it "returns `created`" do
-      expect(response).to have_http_status(:created)
-    end
-
-    include_examples("API Response")
   end
 
   RSpec.shared_examples "Update Request" do |param_key|
-    before(:each) do
-      params = if param_key.present?
-                 { param_key => valid_params }
-               else 
-                valid_params
-               end
+    context 'update request' do
+      before(:each) do
+        params = if param_key.present?
+                   { param_key => valid_params }
+                 else 
+                  valid_params
+                 end
 
-      send(:put, url, params: params.to_json, headers: auth_headers)
+        send(:put, url, params: params.to_json, headers: auth_headers)
+      end
+
+      it "returns `ok`" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      include_examples("API Response")
     end
-
-    it "returns `ok`" do
-      expect(response).to have_http_status(:ok)
-    end
-
-    include_examples("API Response")
   end
 
   # Invalid API
