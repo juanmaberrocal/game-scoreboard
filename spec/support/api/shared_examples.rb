@@ -151,7 +151,7 @@ module Api::SharedExamples
   # Slackbot API
   RSpec.shared_examples "Slack API Response" do
     before(:each) do
-      post v2_slash_command_game_scoreboard_path, params: params, headers: auth_headers
+      post v2_slash_command_game_scoreboard_path, params: params.to_json, headers: auth_headers
     end
 
     it 'returns `response_type` as `ephemeral`' do
