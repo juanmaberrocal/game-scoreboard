@@ -16,7 +16,7 @@ module Api::SharedExamples
                   valid_params
                  end
 
-        send(:get, url, params: params.to_json, headers: auth_headers)
+        send(:get, url, params: params.to_json, headers: (headers || auth_headers))
       end
 
       it "returns `ok`" do
@@ -36,7 +36,7 @@ module Api::SharedExamples
                   valid_params
                  end
 
-        send(:post, url, params: params.to_json, headers: auth_headers)
+        send(:post, url, params: params.to_json, headers: (headers || auth_headers))
       end
 
       it "returns `created`" do
@@ -56,7 +56,7 @@ module Api::SharedExamples
                   valid_params
                  end
 
-        send(:put, url, params: params.to_json, headers: auth_headers)
+        send(:put, url, params: params.to_json, headers: (headers || auth_headers))
       end
 
       it "returns `ok`" do
@@ -84,7 +84,7 @@ module Api::SharedExamples
                 valid_params
                end
 
-      send(request, url, params: params.to_json, headers: auth_headers)
+      send(request, url, params: params.to_json, headers: (headers || auth_headers))
     end
 
     it "returns not_found if no record found" do
@@ -108,7 +108,7 @@ module Api::SharedExamples
                 valid_params
                end
 
-      send(request, url, params: params.to_json, headers: auth_headers)
+      send(request, url, params: params.to_json, headers: (headers || auth_headers))
     end
 
     it "returns bad_request if not provided" do
@@ -121,7 +121,7 @@ module Api::SharedExamples
   # Slackbot API
   RSpec.shared_examples "Slack API Response" do
     before(:each) do
-      post v2_slash_command_game_scoreboard_path, params: params, headers: headers
+      post v2_slash_command_game_scoreboard_path, params: params, headers: (headers || auth_headers)
     end
 
     it 'returns `response_type` as `ephemeral`' do
