@@ -2,10 +2,11 @@
 #
 # Table name: matches
 #
-#  id         :bigint           not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  game_id    :bigint           not null
+#  id           :bigint           not null, primary key
+#  match_status :integer          default("pending"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  game_id      :bigint           not null
 #
 # Indexes
 #
@@ -23,6 +24,8 @@ class Match < ApplicationRecord
   has_many :players, through: :match_players
 
   validates_associated :game
+
+  enum match_status: [:pending, :confirmed, :rejected]
 
   # game_id: int
   # results:
