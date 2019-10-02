@@ -11,7 +11,7 @@
 #  nickname               :string           not null
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :integer          default(1), not null
+#  role                   :integer          default("player"), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
