@@ -30,7 +30,6 @@ module Api
 
           validate_params(validations)
         end
-      end
     end
   end
 end
