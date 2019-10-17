@@ -27,6 +27,18 @@ class MatchPlayer < ApplicationRecord
 
   validates_associated :match, :player
 
+  validates_each :result_status, on: :update do |record, attr, value|
+    old_status = record.result_status_was.to_sym
+    new_status = record.result_status.to_sym
+
+    case new_status
+    when :confirmed, :rejected
+      record.errors.add(attr, "Status cannot be updated from `#{old_status}` to `#{new_status}`") unless old_status == :pending
+    else
+      record.errors.add(attr, "Status cannot be updated to `#{new_status}`")
+    end
+  end
+
   enum result_status: [:pending, :confirmed, :rejected]
 
   def player_name(full_name = false)
