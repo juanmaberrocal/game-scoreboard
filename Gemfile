@@ -52,14 +52,17 @@ group :development, :test do
   # A Ruby gem to load environment variables from `.env`.
   gem 'dotenv-rails'
 
-  # rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework
-  gem 'rspec-rails', '~> 3.8'
-
   # factory_bot is a fixtures replacement with a straightforward definition syntax
   gem 'factory_bot_rails'
 
   # A library for generating fake data such as names, addresses, and phone numbers.
   gem 'faker'
+
+  # A runtime developer console and IRB alternative with powerful introspection capabilities.
+  gem 'pry', '~> 0.12.2'
+
+  # rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :test do
