@@ -24,54 +24,45 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe Api::V1::MatchPlayersController, type: :controller do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Match. As you add validations to Match, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:admin) { create(:player, :admin) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # MatchPlayersController. Be sure to keep this updated too.
-  let(:valid_session) { request.headers.merge!(auth_headers) }
+  let(:valid_session) { request.headers.merge!(auth_headers(admin)) }
 
   before(:each) { valid_session }
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+      let(:pending_match_player) { create(:match_player, result_status: :pending) }
+      let(:updated_status) { 'confirmed' }
+      let(:valid_update_params) {
+        {
+          result_status: updated_status
+        }
       }
 
-      it "updates the requested match" do
-        match = Match.create! valid_attributes
-        put :update, params: {id: match.to_param, match: new_attributes}, session: valid_session
-        match.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the match" do
-        match = Match.create! valid_attributes
-
-        put :update, params: {id: match.to_param, match: valid_attributes}, session: valid_session
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
+      it "changes the `result_status`" do
+        put :update, params: { id: pending_match_player.id, match_player: valid_update_params }
+        pending_match_player.reload
+        expect(pending_match_player.result_status).to eq(updated_status)
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the match" do
-        match = Match.create! valid_attributes
+      let(:confirmed_match_player) { create(:match_player, result_status: :confirmed) }
+      let(:updated_status) { 'pending' }
+      let(:invalid_update_params) {
+        {
+          result_status: updated_status
+        }
+      }
 
-        put :update, params: {id: match.to_param, match: invalid_attributes}, session: valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+      it "does not change the `result_status`" do
+        put :update, params: { id: confirmed_match_player.id, match_player: invalid_update_params }
+        confirmed_match_player.reload
+        expect(confirmed_match_player.result_status).to_not eq(updated_status)
       end
     end
   end
