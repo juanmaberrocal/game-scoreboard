@@ -22,6 +22,8 @@
 #
 
 class MatchPlayer < ApplicationRecord
+  RESULT_STATUSES = %i[pending confirmed rejected].freeze
+
   belongs_to :match
   belongs_to :player
 
@@ -39,7 +41,11 @@ class MatchPlayer < ApplicationRecord
     end
   end
 
-  enum result_status: [:pending, :confirmed, :rejected]
+  enum result_status: RESULT_STATUSES
+
+  RESULT_STATUSES.each do |scope_status|
+    scope scope_status, -> { where(result_status: scope_status) }
+  end
 
   def player_name(full_name = false)
     player.player_name(full_name)

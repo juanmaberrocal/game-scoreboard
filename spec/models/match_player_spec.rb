@@ -46,6 +46,19 @@ RSpec.describe MatchPlayer, type: :model do
     end
   end
 
+  context 'scopes' do
+    %i[pending confirmed rejected].each do |scope_status|
+      it "filter by `result_status`=`#{scope_status}`" do
+        scope_count = rand(1..5)
+        
+        create_list(:match_player, scope_count, result_status: scope_status)
+        create_list(:match_player, rand(1..5), result_status: scope_status == :pending ? :confirmed : :pending)
+
+        expect(MatchPlayer.send(scope_status).count).to eq(scope_count)
+      end
+    end
+  end
+
   context '#player_name' do
     it 'returns players `nickname`' do
       expect(match_player.player_name).to eq(player.player_name(false))
