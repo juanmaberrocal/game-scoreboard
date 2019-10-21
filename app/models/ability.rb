@@ -12,6 +12,8 @@ class Ability
     can :read, Match
     can :create, Match
 
+    can :update, MatchPlayer, player_id: user.id
+
     can :read, Player
     can :update, Player, id: user.id
     can :standings, Player
@@ -19,6 +21,7 @@ class Ability
     if user.admin?
       can :manage, Game
       can :manage, Match
+      can :manage, MatchPlayer
       can :manage, Player
     end
   end
