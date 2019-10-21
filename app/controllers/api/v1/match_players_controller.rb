@@ -5,6 +5,8 @@ module Api
 
       # PATCH/PUT /match_players/1
       def update
+        authorize! :update, @match_player
+
         if @match_player.update(match_params)
           render json: @match_player
         else
