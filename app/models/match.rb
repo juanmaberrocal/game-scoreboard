@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: matches
@@ -17,15 +19,19 @@
 #  fk_rails_...  (game_id => games.id)
 #
 
+# Matches are records of game results. Each Match corresponds to a game played
+# and has multiple MatchPlayers, to accurately describe the players involved
+# and the winner(s) of the game played.
 class Match < ApplicationRecord
   belongs_to :game
 
-  has_many :match_players, -> { order 'match_players.winner DESC' }, inverse_of: :match, dependent: :destroy
+  has_many :match_players, -> { order 'match_players.winner DESC' },
+           inverse_of: :match, dependent: :destroy
   has_many :players, through: :match_players
 
   validates_associated :game
 
-  enum match_status: [:pending, :confirmed, :rejected]
+  enum match_status: %i[pending confirmed rejected]
 
   # game_id: int
   # results:
