@@ -87,6 +87,9 @@ group :development do
   
   # Annotate Rails classes with schema and routes info
   gem 'annotate'
+
+  # A Ruby static code analyzer and formatter, based on the community Ruby style guide. https://docs.rubocop.org
+  gem 'rubocop', '~> 0.75.1', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
