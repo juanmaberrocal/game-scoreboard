@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: match_players
@@ -21,6 +23,7 @@
 #  fk_rails_...  (player_id => players.id)
 #
 
+# MatchPlayers
 class MatchPlayer < ApplicationRecord
   RESULT_STATUSES = %i[pending confirmed rejected].freeze
 
@@ -29,15 +32,23 @@ class MatchPlayer < ApplicationRecord
 
   validates_associated :match, :player
 
-  validates_each :result_status, on: :update, if: :result_status_changed? do |record, attr, value|
+  validates_each :result_status,
+                 on: :update,
+                 if: :result_status_changed? do |record, attr, _value|
     old_status = record.result_status_was.to_sym
     new_status = record.result_status.to_sym
 
     case new_status
     when :confirmed, :rejected
-      record.errors.add(attr, "Status cannot be updated from `#{old_status}` to `#{new_status}`") unless old_status == :pending
+      return unless old_status == :pending
+
+      record.errors
+            .add(attr,
+                 'Status cannot be updated from '\
+                 "`#{old_status}` to `#{new_status}`")
     else
-      record.errors.add(attr, "Status cannot be updated to `#{new_status}`")
+      record.errors
+            .add(attr, "Status cannot be updated to `#{new_status}`")
     end
   end
 
