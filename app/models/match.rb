@@ -31,7 +31,7 @@ class Match < ApplicationRecord
            inverse_of: :match, dependent: :destroy
   has_many :players, through: :match_players
 
-  validates_associated :game
+  validates_associated :game, on: :create
 
   # game_id: int
   # results:

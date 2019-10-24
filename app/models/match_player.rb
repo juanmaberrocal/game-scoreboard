@@ -32,7 +32,10 @@ class MatchPlayer < ApplicationRecord
   belongs_to :match
   belongs_to :player
 
-  validates_associated :match, :player
+  validates_associated :match, :player, on: :create
+
+  after_update :trigger_match_status_change,
+               if: :saved_change_to_result_status?
 
   def player_name(full_name = false)
     player.player_name(full_name)
