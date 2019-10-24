@@ -23,7 +23,9 @@
 #  fk_rails_...  (player_id => players.id)
 #
 
-# MatchPlayers
+# MatchPlayers are records of an individual players result for a given Match.
+# The records keep track of who played what game
+# and which of those players won the match
 class MatchPlayer < ApplicationRecord
   include WithStatus
 
