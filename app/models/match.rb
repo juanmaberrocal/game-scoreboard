@@ -23,6 +23,8 @@
 # and has multiple MatchPlayers, to accurately describe the players involved
 # and the winner(s) of the game played.
 class Match < ApplicationRecord
+  include WithStatus
+
   belongs_to :game
 
   has_many :match_players, -> { order 'match_players.winner DESC' },
@@ -30,8 +32,6 @@ class Match < ApplicationRecord
   has_many :players, through: :match_players
 
   validates_associated :game
-
-  enum match_status: %i[pending confirmed rejected]
 
   # game_id: int
   # results:

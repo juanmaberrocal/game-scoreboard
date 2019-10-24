@@ -25,38 +25,12 @@
 
 # MatchPlayers
 class MatchPlayer < ApplicationRecord
-  RESULT_STATUSES = %i[pending confirmed rejected].freeze
+  include WithStatus
 
   belongs_to :match
   belongs_to :player
 
   validates_associated :match, :player
-
-  validates_each :result_status,
-                 on: :update,
-                 if: :result_status_changed? do |record, attr, _value|
-    old_status = record.result_status_was.to_sym
-    new_status = record.result_status.to_sym
-
-    case new_status
-    when :confirmed, :rejected
-      return unless old_status == :pending
-
-      record.errors
-            .add(attr,
-                 'Status cannot be updated from '\
-                 "`#{old_status}` to `#{new_status}`")
-    else
-      record.errors
-            .add(attr, "Status cannot be updated to `#{new_status}`")
-    end
-  end
-
-  enum result_status: RESULT_STATUSES
-
-  RESULT_STATUSES.each do |scope_status|
-    scope scope_status, -> { where(result_status: scope_status) }
-  end
 
   def player_name(full_name = false)
     player.player_name(full_name)
