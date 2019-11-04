@@ -69,4 +69,9 @@ class Match < ApplicationRecord
     StandingsGenerators::MatchStandingsService.new(self)
                                               .generate
   end
+
+  private
+
+  # def trigger_status_change
+  # end
 end
