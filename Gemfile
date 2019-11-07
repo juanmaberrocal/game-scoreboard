@@ -35,7 +35,7 @@ gem 'fast_jsonapi'
 gem 'image_processing', '~> 1.2', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 # Exception tracking and logging from Ruby to Rollbar https://docs.rollbar.com/docs/ruby
 gem 'rollbar'
@@ -52,14 +52,17 @@ group :development, :test do
   # A Ruby gem to load environment variables from `.env`.
   gem 'dotenv-rails'
 
-  # rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework
-  gem 'rspec-rails', '~> 3.8'
-
   # factory_bot is a fixtures replacement with a straightforward definition syntax
   gem 'factory_bot_rails'
 
   # A library for generating fake data such as names, addresses, and phone numbers.
   gem 'faker'
+
+  # A runtime developer console and IRB alternative with powerful introspection capabilities.
+  gem 'pry', '~> 0.12.2'
+
+  # rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :test do
@@ -84,6 +87,9 @@ group :development do
   
   # Annotate Rails classes with schema and routes info
   gem 'annotate'
+
+  # A Ruby static code analyzer and formatter, based on the community Ruby style guide. https://docs.rubocop.org
+  gem 'rubocop', '~> 0.75.1', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

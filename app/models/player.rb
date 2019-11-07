@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: players
@@ -11,7 +13,7 @@
 #  nickname               :string           not null
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :integer          default(1), not null
+#  role                   :integer          default("player"), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -23,8 +25,14 @@
 #  index_players_on_reset_password_token      (reset_password_token) UNIQUE
 #
 
+# Players are users. Each player has an email and password for logging in
+# and accessing the information available.
+# Players can have different roles,
+# which controls the amount of data they can manage
+# Players play multiple Match records;
+# they have their match results stored against MatchPlayer records
 class Player < ApplicationRecord
-  # Include default devise modules: 
+  # Include default devise modules:
   #   :registerable, :recoverable, :rememberable, :validatable
   # Others available are:
   #   :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -35,16 +43,17 @@ class Player < ApplicationRecord
   has_one_attached :avatar
 
   has_many :match_players, inverse_of: :player
-  has_many :matches, -> { order 'matches.created_at DESC' }, through: :match_players
+  has_many :matches, -> { order 'matches.created_at DESC' },
+           through: :match_players
 
   validates :first_name, :last_name, :nickname, :email, presence: true
   validates :nickname, :email, uniqueness: { case_sensitive: false }
 
-  enum role: [:admin, :player]
+  enum role: %i[admin player]
 
   def self.find_by_name(search_name)
     Player.find_by(nickname: search_name) ||
-    Player.similar('first_name || last_name', search_name).sample
+      Player.similar('first_name || last_name', search_name).sample
   end
 
   def self.standings

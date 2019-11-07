@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Match, type: :model do
   let(:foo_match) { create(:match) }
+
+  include_examples('WithStatus Concern', :match, :match_status)
 
   context 'relations' do
     it { is_expected.to belong_to(:game) }

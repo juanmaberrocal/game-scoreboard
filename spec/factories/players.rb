@@ -7,6 +7,10 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.unique.password }
 
+    trait :admin do
+      role { :admin }
+    end
+
     factory :player_with_matches do
       transient do
         match_count { 3 }

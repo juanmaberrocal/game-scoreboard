@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # concerns
   concern :with_matches do
-    resources :matches, only: [:index, :show]
+    resources :matches, only: %i[index show]
   end
 
   concern :with_standings do
@@ -21,6 +21,9 @@ Rails.application.routes.draw do
         
         # /api/v1/matches
         resources :matches
+
+        # /api/v1/matche_players
+        resources :match_players, only: %i[update]
 
         # /api/v1/players
         resources :players, concerns: %i[
@@ -50,8 +53,8 @@ Rails.application.routes.draw do
         namespace :slack_bot do
         end
       end
-    # end
-  end
+    end
+  # end
 
   scope module: 'system' do
     get 'ping'

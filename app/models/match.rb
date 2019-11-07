@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: matches
 #
-#  id         :bigint           not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  game_id    :bigint           not null
+#  id           :bigint           not null, primary key
+#  match_status :integer          default("pending"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  game_id      :bigint           not null
 #
 # Indexes
 #
@@ -16,13 +19,19 @@
 #  fk_rails_...  (game_id => games.id)
 #
 
+# Matches are records of game results. Each Match corresponds to a game played
+# and has multiple MatchPlayers, to accurately describe the players involved
+# and the winner(s) of the game played.
 class Match < ApplicationRecord
+  include WithStatus
+
   belongs_to :game
 
-  has_many :match_players, -> { order 'match_players.winner DESC' }, inverse_of: :match, dependent: :destroy
+  has_many :match_players, -> { order 'match_players.winner DESC' },
+           inverse_of: :match, dependent: :destroy
   has_many :players, through: :match_players
 
-  validates_associated :game
+  validates_associated :game, on: :create
 
   # game_id: int
   # results:
@@ -60,4 +69,9 @@ class Match < ApplicationRecord
     StandingsGenerators::MatchStandingsService.new(self)
                                               .generate
   end
+
+  private
+
+  # def trigger_status_change
+  # end
 end
