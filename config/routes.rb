@@ -72,8 +72,8 @@ Rails.application.routes.draw do
              skip: %i[registrations]
 
   devise_scope :player do
-    get 'renew', to: 'sessions#renew', as: :player_session_renew
+    get 'renew', to: 'sessions#renew', as: :renew_player_session
     post 'signup', to: 'registrations#create', as: :player_registration
-    post 'update_password', to: 'registrations#update_password', as: :player_session_update_password
+    post 'update_password', to: 'registrations#update_password', as: :update_password_player_registration
   end
 end

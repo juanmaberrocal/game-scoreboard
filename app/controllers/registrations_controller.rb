@@ -15,7 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
     if current_player.update_with_password(update_password_params)
       render json: PlayerSerializer.new(current_player)
     else
-      render json: current_player.errors, status: :unprocessable_entity
+      unprocessable_entity!(current_player)
     end
   end
 
