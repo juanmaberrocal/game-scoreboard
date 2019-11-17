@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api::SharedExamples
   # Base API
   RSpec.shared_examples "API Response" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GeneralApiError < StandardError
   attr_reader :controller, :action,
               :custom_message
