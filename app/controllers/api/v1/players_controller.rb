@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class PlayersController < ApiController
-      before_action :set_player, only: [:show, :standings, :update, :destroy]
+      before_action :set_player, only: %i[show standings update destroy]
 
       # GET /players
       def index
@@ -37,7 +39,9 @@ module Api
         if @player.update(player_params)
           render json: @player
         else
-          raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @player.errors)
+          raise ApiError::UnprocessableEntity.new(params[:controller],
+                                                  params[:action],
+                                                  @player.errors)
         end
       end
 
@@ -47,16 +51,17 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_player
-          @player = Player.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def player_params
-          params.require(:player).permit(:first_name, :last_name, :email,
-                                         :nickname, :avatar)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_player
+        @player = Player.find(params[:id])
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def player_params
+        params.require(:player).permit(:first_name, :last_name, :email,
+                                       :nickname, :avatar)
+      end
     end
   end
 end
