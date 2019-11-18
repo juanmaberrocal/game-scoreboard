@@ -303,13 +303,13 @@ Devise.setup do |config|
     jwt.dispatch_requests = [
       ['POST', %r{^/signup$}],
       ['POST', %r{^/login$}],
-      ['GET',  %r{^/renew}],
-      ['POST', %r{^/update_password}]
+      ['GET',  %r{^/renew$}],
+      ['POST', %r{^/update_password$}]
     ]
     jwt.revocation_requests = [
       ['DELETE', %r{^/logout$}],
-      ['GET',    %r{^/renew}],
-      ['POST',   %r{^/update_password}]
+      ['GET',    %r{^/renew$}],
+      ['POST',   %r{^/update_password$}]
       # ['GET',  %r{^/reset_password}]
     ]
     jwt.expiration_time = 30.days.to_i
