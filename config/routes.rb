@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     resources :matches, only: %i[index show]
   end
 
+  concern :with_statistics do
+    get 'statistics', on: :member
+  end
+
   concern :with_standings do
     get 'standings', on: :member
   end
@@ -28,6 +32,7 @@ Rails.application.routes.draw do
         # /api/v1/players
         resources :players, concerns: %i[
           with_matches
+          with_statistics
           with_standings
         ]
 
@@ -60,18 +65,14 @@ Rails.application.routes.draw do
     get 'ping'
   end
 
-  devise_for :players,
-             path: '',
-             path_names: {
-               sign_in: 'login',
-               sign_out: 'logout'
-             },
-             controllers: {
-               sessions: 'sessions'
-             }
-
+  devise_for :players, skip: :all
   devise_scope :player do
-    get 'renew', to: 'sessions#renew', as: :player_session_renew
-    post 'update_password', to: 'sessions#update_password', as: :player_session_update_password
+    get    'renew',  to: 'sessions#renew',   as: :renew_player_session
+    post   'login',  to: 'sessions#create',  as: :player_session
+    delete 'logout', to: 'sessions#destroy', as: :destroy_player_session
+
+    post 'signup',   to: 'registrations#create', as: :player_registration
+    post 'update_password', to: 'registrations#update_password',
+                            as: :update_password_player_registration
   end
 end

@@ -1,5 +1,5 @@
 class MatchSerializer < FastJsonapiSerializer
-  attributes :game_id
+  attributes :game_id, :played_on
 
   belongs_to :game
 

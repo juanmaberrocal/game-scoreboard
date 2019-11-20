@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module Api
   module V1
+    #
     class MatchesController < ApiController
-      before_action :set_match, only: [:show, :update, :destroy]
+      before_action :set_match, only: %i[show update destroy]
 
       # GET /matches
       def index
@@ -28,7 +31,7 @@ module Api
 
       # POST /matches
       def create
-        @match = Match.initialize_with_results(match_params[:game_id], 
+        @match = Match.initialize_with_results(match_params[:game_id],
                                                match_params[:results].to_hash)
 
         if @match.save
@@ -54,25 +57,26 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_match
-          @match = Match.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def match_params
-          results_keys = params[:match][:results].keys
-          params.require(:match).permit(:game_id, results: results_keys)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_match
+        @match = Match.find(params[:id])
+      end
 
-        def validate_create
-          validations = {
-            game_id: [:required, Integer],
-            results: [:required, Hash]
-          }
+      # Only allow a trusted parameter "white list" through.
+      def match_params
+        results_keys = params[:match][:results].keys
+        params.require(:match).permit(:game_id, results: results_keys)
+      end
 
-          validate_params(validations)
-        end
+      def validate_create
+        validations = {
+          game_id: [:required, Integer],
+          results: [:required, Hash]
+        }
+
+        validate_params(validations)
+      end
     end
   end
 end

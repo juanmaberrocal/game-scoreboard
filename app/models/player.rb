@@ -33,10 +33,10 @@
 # they have their match results stored against MatchPlayer records
 class Player < ApplicationRecord
   # Include default devise modules:
-  #   :registerable, :recoverable, :rememberable, :validatable
+  #   :recoverable, :rememberable
   # Others available are:
   #   :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable,
+  devise :database_authenticatable, :registerable, :validatable,
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtBlacklist
 
@@ -75,6 +75,11 @@ class Player < ApplicationRecord
 
   def last_match
     matches.first
+  end
+
+  def statistics
+    StatisticsGenerators::PlayerStatisticsService.new(self)
+                                                 .generate
   end
 
   def standings
