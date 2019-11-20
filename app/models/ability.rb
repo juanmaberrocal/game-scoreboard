@@ -16,6 +16,7 @@ class Ability
 
     can :read, Player
     can :update, Player, id: user.id
+    can :statistics, Player
     can :standings, Player
 
     if user.admin?
