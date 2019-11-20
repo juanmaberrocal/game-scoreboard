@@ -5,7 +5,6 @@
 # Adds validation for column
 #   to ensure status can only change in certain direction
 # Adds enum for column
-# Adds scopes for all statuses
 module WithStatus
   extend ActiveSupport::Concern
 
@@ -41,10 +40,6 @@ module WithStatus
       end
 
       enum column => STATUSES
-
-      STATUSES.each do |scope_status|
-        scope scope_status, -> { where(column => scope_status) }
-      end
     end
   end
 end
