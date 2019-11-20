@@ -77,6 +77,11 @@ class Player < ApplicationRecord
     matches.first
   end
 
+  def statistics
+    StatisticsGenerators::PlayerStatisticsService.new(self)
+                                                 .generate
+  end
+
   def standings
     StandingsGenerators::PlayerStandingsService.new(self)
                                                .generate

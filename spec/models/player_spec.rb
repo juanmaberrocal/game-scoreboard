@@ -120,6 +120,16 @@ RSpec.describe Player, type: :model do
     end
   end
 
+  context '#statistics' do
+    let(:player) { foo_player }
+    let(:player_statistics) { StatisticsGenerators::PlayerStatisticsService }
+
+    it 'instance method calls statistics service with player arg' do
+      expect(player_statistics).to receive(:new).with(player).and_return(player_statistics.new(player))
+      player.statistics
+    end
+  end
+
   context '#standings' do
     let(:player) { foo_player }
     let(:player_standings) { StandingsGenerators::PlayerStandingsService }
