@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         # /api/v1/games
         resources :games, concerns: %i[
           with_matches
+          with_statistics
           with_standings
         ]
         
