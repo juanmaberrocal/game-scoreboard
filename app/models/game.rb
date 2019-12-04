@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: games
@@ -20,7 +22,7 @@
 
 class Game < ApplicationRecord
   has_one_attached :avatar
-  
+
   has_many :matches, -> { order 'matches.created_at DESC' }
 
   validates :name, :slug, presence: true
@@ -49,6 +51,11 @@ class Game < ApplicationRecord
     matches.first
   end
 
+  def statistics
+    StatisticsGenerators::GameStatisticsService.new(self)
+                                                 .generate
+  end
+
   def standings
     StandingsGenerators::GameStandingsService.new(self)
                                              .generate
@@ -57,6 +64,6 @@ class Game < ApplicationRecord
   private
 
   def slug_name
-    self.slug = self.name.parameterize
+    self.slug = name.parameterize
   end
 end

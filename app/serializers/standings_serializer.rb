@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StandingsSerializer < FastJsonapiSerializer
   attributes :standings
 

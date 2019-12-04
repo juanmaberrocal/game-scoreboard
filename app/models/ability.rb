@@ -7,7 +7,8 @@ class Ability
     return unless user.present?
 
     can :read, Game
-    can :standings, Player
+    can :statistics, Game
+    can :standings, Game
 
     can :read, Match
     can :create, Match

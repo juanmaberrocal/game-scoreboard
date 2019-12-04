@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class GamesController < ApiController
-      before_action :set_game, only: [:show, :standings, :update, :destroy]
+      before_action :set_game, only: %i[show statistics standings update destroy]
 
       # GET /games
       def index
@@ -15,6 +17,12 @@ module Api
         render json: @game
       end
 
+      # GET /games/1/statistics
+      def statistics
+        render json: StatisticsSerializer.new(@game)
+      end
+
+      # GET /games/1/standings
       def standings
         render json: StandingsSerializer.new(@game)
       end
@@ -45,18 +53,19 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_game
-          @game = Game.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def game_params
-          params.require(:game).permit(:name, :description, 
-                                       :min_players, :max_players,
-                                       :min_play_time, :max_play_time,
-                                       :avatar)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_game
+        @game = Game.find(params[:id])
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def game_params
+        params.require(:game).permit(:name, :description,
+                                     :min_players, :max_players,
+                                     :min_play_time, :max_play_time,
+                                     :avatar)
+      end
     end
   end
 end

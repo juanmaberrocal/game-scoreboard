@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GameSerializer < FastJsonapiSerializer
   attributes :name
 
@@ -5,11 +7,11 @@ class GameSerializer < FastJsonapiSerializer
              :min_players,
              :max_players,
              :min_play_time,
-             :max_play_time, if: Proc.new { |game, params|
+             :max_play_time, if: proc { |_game, params|
     params[:public]&.to_bool.blank?
   }
 
-  attribute :avatar_url, if: Proc.new { |game, params|
+  attribute :avatar_url, if: proc { |game, _params|
     game.avatar.attached?
   } do |game|
     if Rails.env.production?
