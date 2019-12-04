@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # concerns
   concern :with_matches do
@@ -23,7 +25,7 @@ Rails.application.routes.draw do
           with_statistics
           with_standings
         ]
-        
+
         # /api/v1/matches
         resources :matches
 
@@ -41,7 +43,7 @@ Rails.application.routes.draw do
         namespace :slack_bot do
           post 'game_score'
           post 'game_scoreboard'
-          
+
           post 'match_score'
 
           post 'player_score'
