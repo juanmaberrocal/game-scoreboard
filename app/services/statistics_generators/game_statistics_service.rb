@@ -11,9 +11,9 @@ module StatisticsGenerators
     def generate
       raw_statistics.each do |raw_statistic|
         statistics[:leaderboard] << {
-          player: raw_statistic.player_id,
-          played: raw_statistic.played,
-          won:    raw_statistic.won
+          player_id: raw_statistic.player_id,
+          played:    raw_statistic.played,
+          won:       raw_statistic.won
         }
       end
 
@@ -43,7 +43,7 @@ module StatisticsGenerators
                                         'SUM(CAST(match_players.winner AS INT)) AS "won"'])
                                .where(game: @record)
                                .group(:player_id)
-                               .order(played: :desc, won: :desc)
+                               .order(won: :desc, played: :asc)
     end
 
     def percentiles
@@ -57,12 +57,12 @@ module StatisticsGenerators
     # v = (i + (i + 1)) / 2
     def percentile(pct)
       n = raw_statistics.length
-      i = (pct.to_f / 100) * n
+      i = ((pct.to_f / 100) * n).ceil
 
-      x = raw_statistics[i - 1].won
-      y = raw_statistics[i - 2].won
+      x = raw_statistics[i - 1]&.won || 0
+      y = raw_statistics[i - 2]&.won || 0
 
-      ((x + y) / 2)
+      ((x + y).to_f / 2).ceil
     end
   end
 end
