@@ -59,8 +59,8 @@ module StatisticsGenerators
       n = raw_statistics.length
       i = ((pct.to_f / 100) * n).ceil
 
-      x = raw_statistics[i - 1]&.won || 0
-      y = raw_statistics[i - 2]&.won || 0
+      x = raw_statistics[n - (i - 0)]&.won || 0
+      y = raw_statistics[n - (i - 1)]&.won || 0
 
       ((x + y).to_f / 2).ceil
     end
