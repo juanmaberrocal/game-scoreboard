@@ -11,7 +11,7 @@ class SlashCommandActionServicePicker
                      "#{model}_#{action}"\
                      "#{SLASH_COMMAND_ACTIONS_SUFIX}".classify
     service_klass  = service_string.constantize
-    
+
     service = service_klass.new(params)
   rescue => e
     raise InvalidSlashCommand.new("#{action}:#{model} #{params}")

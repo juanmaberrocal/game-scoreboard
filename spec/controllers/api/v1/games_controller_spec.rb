@@ -24,7 +24,6 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe Api::V1::GamesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Game. As you add validations to Game, be sure to
   # adjust the attributes here as well.
@@ -66,7 +65,6 @@ RSpec.describe Api::V1::GamesController, type: :controller do
       end
 
       it "renders a JSON response with the new game" do
-
         post :create, params: {game: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
@@ -76,7 +74,6 @@ RSpec.describe Api::V1::GamesController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the new game" do
-
         post :create, params: {game: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
@@ -125,5 +122,4 @@ RSpec.describe Api::V1::GamesController, type: :controller do
       }.to change(Game, :count).by(-1)
     end
   end
-
 end

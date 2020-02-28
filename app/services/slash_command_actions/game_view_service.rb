@@ -1,6 +1,5 @@
 module SlashCommandActions
   class GameViewService < ViewService
-
     private
 
     def record=(game_name)

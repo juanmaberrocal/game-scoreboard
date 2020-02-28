@@ -14,8 +14,7 @@ module Api
         error_response(e.message)
       end
 
-      def games_scoreboard
-      end
+      def games_scoreboard; end
 
       def match_score
         set_game

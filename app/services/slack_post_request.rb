@@ -8,10 +8,9 @@ class SlackPostRequest
     @user_id      = user_id
   end
 
-
   def post(body)
     request_body(body)
-    
+
     http.use_ssl = true
     http.request(request)
   end

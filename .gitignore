@@ -23,3 +23,6 @@
 
 # Ignore dotenv configuration variables
 .env
+
+# Ignore rubocop todo configuration
+.rubocop_todo.yml

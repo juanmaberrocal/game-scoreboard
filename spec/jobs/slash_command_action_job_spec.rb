@@ -65,7 +65,7 @@ RSpec.describe SlashCommandActionJob, type: :job do
 
     it 'when `InvalidSlashCommand` is raised' do
       error_message[:blocks].first[:text][:text] = InvalidSlashCommand.new(action).message
-      
+
       allow_any_instance_of(SlashCommandActionJob).to receive(:perform_slash_command).and_raise(InvalidSlashCommand.new(action))
       expect(SlackPostRequest).to receive(:new).with(response_url, user_id)
                                                .and_return(SlackPostRequest.new(response_url, user_id))

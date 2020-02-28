@@ -55,6 +55,7 @@ RSpec.describe Player, type: :model do
 
           %i[create update delete].each do |action|
             next if action == :create && model == 'match'
+
             it { is_expected.to_not be_able_to(action, model.classify.constantize.new) }
           end
         end

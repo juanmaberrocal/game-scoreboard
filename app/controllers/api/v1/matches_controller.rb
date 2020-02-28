@@ -2,7 +2,6 @@
 
 module Api
   module V1
-    #
     class MatchesController < ApiController
       before_action :set_match, only: %i[show update destroy]
 

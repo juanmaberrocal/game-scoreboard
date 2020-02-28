@@ -9,7 +9,7 @@ class InvalidGameRequest < StandardError
   def message
     "Sorry, `#{game.titleize}` was not found. "\
     "Here are several games you can look for: "\
-    "#{message_games.pluck(:name).map { |g| "`#{g}`" }.join(', ') }"
+    "#{message_games.pluck(:name).map { |g| "`#{g}`" }.join(', ')}"
   end
 
   private

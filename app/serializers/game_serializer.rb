@@ -8,8 +8,8 @@ class GameSerializer < FastJsonapiSerializer
              :max_players,
              :min_play_time,
              :max_play_time, if: proc { |_game, params|
-    params[:public]&.to_bool.blank?
-  }
+               params[:public]&.to_bool.blank?
+             }
 
   attribute :avatar_url, if: proc { |game, _params|
     game.avatar.attached?

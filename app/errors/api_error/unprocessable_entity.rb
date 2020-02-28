@@ -9,7 +9,7 @@ module ApiError
 
     def message
       super +
-      errors.full_messages.join(' & ')
+        errors.full_messages.join(' & ')
     end
   end
 end

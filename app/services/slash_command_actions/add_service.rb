@@ -19,7 +19,7 @@ module SlashCommandActions
 
     KLASS = ''.freeze
 
-    def klass=(value);
+    def klass=(value)
       @klass = value.constantize
     end
 

@@ -1,0 +1,17 @@
+# inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+
+Layout/AlignHash:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'spec/**/*'
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
