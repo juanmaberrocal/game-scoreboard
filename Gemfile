@@ -8,11 +8,10 @@ gem 'rails', '~> 6.0.0.rc1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
-
+gem 'puma', '~> 3.12'
 
 # The official AWS SDK for Ruby. http://aws.amazon.com/sdkforruby
-gem "aws-sdk-s3", require: false
+gem 'aws-sdk-s3', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -23,7 +22,7 @@ gem 'cancancan'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # JWT token authentication with devise and rails
-gem "devise", ">= 4.7.1"
+gem 'devise', '>= 4.7.1'
 gem 'devise-jwt', '~> 0.5.9'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -35,7 +34,7 @@ gem 'fast_jsonapi'
 gem 'image_processing', '~> 1.2', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+gem 'rack-cors', '>= 1.0.4'
 
 # Exception tracking and logging from Ruby to Rollbar https://docs.rollbar.com/docs/ruby
 gem 'rollbar'

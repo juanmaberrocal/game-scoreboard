@@ -7,7 +7,8 @@ class Ability
     return unless user.present?
 
     can :read, Game
-    can :standings, Player
+    can :statistics, Game
+    can :standings, Game
 
     can :read, Match
     can :create, Match
@@ -16,6 +17,7 @@ class Ability
 
     can :read, Player
     can :update, Player, id: user.id
+    can :statistics, Player
     can :standings, Player
 
     if user.admin?

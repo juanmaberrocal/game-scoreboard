@@ -5,7 +5,7 @@ FactoryBot.define do
     birth_date { Faker::Date.birthday }
     nickname { Faker::FunnyName.unique.name }
     email { Faker::Internet.unique.email }
-    password { Faker::Internet.unique.password }
+    password { Faker::Internet.password }
 
     trait :admin do
       role { :admin }

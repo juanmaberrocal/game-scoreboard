@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class PlayerSerializer < FastJsonapiSerializer
   attributes :nickname
 
   attributes :email,
              :first_name,
              :last_name,
-             :role, if: Proc.new { |player, params|
+             :role, if: proc { |_player, params|
     params[:public]&.to_bool.blank?
   }
 
-  attribute :avatar_url, if: Proc.new { |player, params|
+  attribute :avatar_url, if: proc { |player, _params|
     player.avatar.attached?
   } do |player|
     if Rails.env.production?

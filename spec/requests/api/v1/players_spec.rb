@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "V1/Players", type: :request do
-  describe "GET /players" do
+RSpec.describe 'V1/Players', type: :request do
+  describe 'GET /players' do
     let(:players) { create_list(:player, 5) }
-    
+
     let(:url) { v1_players_path }
     let(:valid_params) { {} }
 
@@ -11,13 +13,45 @@ RSpec.describe "V1/Players", type: :request do
       get url, headers: auth_headers
       expect(json_data.length).to eq(1) # current player
     end
-    
-    include_examples("Get Request")
+
+    include_examples('Get Request')
   end
 
-  describe "GET /player/:id/standings" do
+  describe 'GET /player/:id/statistics' do
     let(:player) { create(:player_with_matches) }
-    
+
+    let(:url) { statistics_v1_player_path(id: player.id) }
+    let(:valid_params) { {} }
+
+    context 'valid' do
+      context 'returns body' do
+        it 'with player id' do
+          get url, headers: auth_headers
+          expect(json_id).to eq(player.id)
+        end
+
+        it 'with standings list' do
+          get url, headers: auth_headers
+          expect(json_attribute('statistics')).to eq(player.statistics.deep_stringify_keys)
+        end
+      end
+
+      include_examples('Get Request')
+    end
+
+    context 'invalid' do
+      context '`id` param' do
+        let(:url) { standings_v1_player_path(id: 0) }
+        let(:valid_params) { {} }
+
+        include_examples('Not Found', :get)
+      end
+    end
+  end
+
+  describe 'GET /player/:id/standings' do
+    let(:player) { create(:player_with_matches) }
+
     let(:url) { standings_v1_player_path(id: player.id) }
     let(:valid_params) { {} }
 
@@ -34,7 +68,7 @@ RSpec.describe "V1/Players", type: :request do
         end
       end
 
-      include_examples("Get Request")
+      include_examples('Get Request')
     end
 
     context 'invalid' do
@@ -42,14 +76,14 @@ RSpec.describe "V1/Players", type: :request do
         let(:url) { standings_v1_player_path(id: 0) }
         let(:valid_params) { {} }
 
-        include_examples("Not Found", :get)
+        include_examples('Not Found', :get)
       end
     end
   end
 
-  describe "PUT /players" do
+  describe 'PUT /players' do
     let(:player) { create(:player) }
-    
+
     let(:url) { v1_player_path(id: player.id) }
     let(:valid_params) { { first_name: 'foo' } }
     let(:auth_header_override) { auth_headers(player) }
@@ -60,7 +94,7 @@ RSpec.describe "V1/Players", type: :request do
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
           email: Faker::Internet.unique.email,
-          nickname: Faker::FunnyName.unique.name,
+          nickname: Faker::FunnyName.unique.name
           # avatar: Faker::Avatar.image('image.jpg')
         }.each do |attribute, value|
           it "returns updated `#{attribute}` as `#{value}`" do
@@ -73,7 +107,7 @@ RSpec.describe "V1/Players", type: :request do
       context 'unpermitted params' do
         {
           password: Faker::Internet.unique.password,
-          birth_date: Faker::Date.birthday,
+          birth_date: Faker::Date.birthday
         }.each do |attribute, value|
           it "does not return updated `#{attribute}` as `#{value}`" do
             put url, params: { player: { attribute => value } }.to_json, headers: auth_headers(player)
@@ -96,29 +130,29 @@ RSpec.describe "V1/Players", type: :request do
         end
       end
 
-      include_examples("Update Request", :player)
+      include_examples('Update Request', :player)
     end
-    
+
     context 'invalid' do
       context '`id` param' do
         context 'for player that doesn\'t exist' do
           let(:url) { v1_player_path(id: 0) }
           let(:valid_params) { {} }
-          include_examples("Not Found", :put)
+          include_examples('Not Found', :put)
         end
 
         context 'for a different player than current' do
           let(:foo_player) { create(:player) }
           let(:url) { v1_player_path(id: foo_player.id) }
           let(:valid_params) { {} }
-          include_examples("Forbidden", :put)
+          include_examples('Forbidden', :put)
         end
       end
 
       context '`player` param key' do
         let(:url) { v1_player_path(id: player.id) }
         let(:valid_params) { {} }
-        include_examples("Bad Request", :put)
+        include_examples('Bad Request', :put)
       end
     end
   end

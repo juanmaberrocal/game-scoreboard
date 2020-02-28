@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class StandingsSerializer < FastJsonapiSerializer
-  attributes :standings
+class StatisticsSerializer < FastJsonapiSerializer
+  attributes :statistics
 
   meta do |record|
     {
