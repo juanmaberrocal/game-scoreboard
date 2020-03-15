@@ -53,7 +53,7 @@ class Game < ApplicationRecord
 
   def statistics
     StatisticsGenerators::GameStatisticsService.new(self)
-                                                 .generate
+                                               .generate
   end
 
   def standings

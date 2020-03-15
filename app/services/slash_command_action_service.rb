@@ -9,14 +9,13 @@ class SlashCommandActionService
     build_response
   end
 
-
   def post_response(response_url, user_id = nil)
     SlackPostRequest.new(response_url, user_id)
                     .post(build_body)
   end
 
   private
-  
+
   def build_response; end
 
   def build_body

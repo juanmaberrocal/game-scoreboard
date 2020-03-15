@@ -1,6 +1,6 @@
 module SlashCommands
   class PlayersStandingsService < StandingsService
-    
+
     def fetch_response
       fetch_standings
       super()

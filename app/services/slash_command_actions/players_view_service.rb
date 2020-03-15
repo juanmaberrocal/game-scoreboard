@@ -1,6 +1,5 @@
 module SlashCommandActions
   class PlayersViewService < ViewService
-
     private
 
     def record=(_)

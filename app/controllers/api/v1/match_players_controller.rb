@@ -15,23 +15,24 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_match
-          @match_player = MatchPlayer.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def match_params
-          params.require(:match_player).permit(:result_status)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_match
+        @match_player = MatchPlayer.find(params[:id])
+      end
 
-        def validate_update
-          validations = {
-            result_status: [:required, String],
-          }
+      # Only allow a trusted parameter "white list" through.
+      def match_params
+        params.require(:match_player).permit(:result_status)
+      end
 
-          validate_params(validations)
-        end
+      def validate_update
+        validations = {
+          result_status: [:required, String]
+        }
+
+        validate_params(validations)
+      end
     end
   end
 end

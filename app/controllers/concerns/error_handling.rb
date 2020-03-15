@@ -9,7 +9,7 @@ module ErrorHandling
 
     rescue_from ActiveRecord::RecordNotFound,
                 with: :handle_not_found
-    
+
     rescue_from CanCan::AccessDenied,
                 with: :handle_forbidden
 

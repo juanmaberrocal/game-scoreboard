@@ -10,7 +10,7 @@ module ApiError
 
     def message
       super +
-      "Invalid `#{param}` value: `#{value}`."
+        "Invalid `#{param}` value: `#{value}`."
     end
   end
 end

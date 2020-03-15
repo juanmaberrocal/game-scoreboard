@@ -24,7 +24,6 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe Api::V1::MatchesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Match. As you add validations to Match, be sure to
   # adjust the attributes here as well.
@@ -64,7 +63,7 @@ RSpec.describe Api::V1::MatchesController, type: :controller do
       let(:valid_create_params) {
         {
           game_id: create(:game).id,
-          results: { 
+          results: {
             create(:player).id => true
           }
         }
@@ -148,5 +147,4 @@ RSpec.describe Api::V1::MatchesController, type: :controller do
       }.to change(Match, :count).by(-1)
     end
   end
-
 end

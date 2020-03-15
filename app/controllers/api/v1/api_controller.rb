@@ -32,6 +32,7 @@ module Api
       # params validation helpers
       def validate_request!
         return unless respond_to?("validate_#{params[:action]}".to_sym, true)
+
         send("validate_#{params[:action]}".to_sym)
       end
 
@@ -73,7 +74,7 @@ module Api
       def serializer?
         serializer.present?
       end
-      
+
       def unserialzed?(klass)
         !(klass < FastJsonapiSerializer)
       end

@@ -12,8 +12,8 @@ RSpec.describe SlashCommandActions::MatchAddService, type: :service do
   let(:record_params) do
     {
       game: game.name.gsub(':', ''),
-      :"#{winner.nickname}" => 'true',
-      :"#{loser.nickname}" => 'false'
+      "#{winner.nickname}": 'true',
+      "#{loser.nickname}": 'false'
     }
   end
 

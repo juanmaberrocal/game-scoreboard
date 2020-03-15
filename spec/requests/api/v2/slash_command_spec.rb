@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "V2/SlashCommand", type: :request do
-  describe "POST /game_scoreboard" do
+RSpec.describe 'V2/SlashCommand', type: :request do
+  describe 'POST /game_scoreboard' do
     let(:command) { '/game-scoreboard' }
     let(:headers) do
       {
@@ -24,12 +24,12 @@ RSpec.describe "V2/SlashCommand", type: :request do
       context 'failed with invalid authentication' do
         it 'returns `text` as `InvalidSlackRequest#message`' do
           allow_any_instance_of(SlackRequestAuthenticator).to receive(:authenticate!).and_raise(InvalidSlackRequest)
-          
+
           post v2_slash_command_game_scoreboard_path, params: params, headers: headers
           expect(json_body['text']).to eq(InvalidSlackRequest.new.message)
         end
 
-        include_examples("Slack API Response")
+        include_examples('Slack API Response')
       end
 
       context 'failed with invalid request' do
@@ -40,7 +40,7 @@ RSpec.describe "V2/SlashCommand", type: :request do
           expect(json_body['text']).to eq(default_error_text)
         end
 
-        include_examples("Slack API Response")
+        include_examples('Slack API Response')
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe "V2/SlashCommand", type: :request do
           text: 'view:players'
         }
       end
-      
+
       before(:each) do
         allow_any_instance_of(SlackRequestAuthenticator).to receive(:authenticate!).and_return(true)
       end
@@ -64,7 +64,7 @@ RSpec.describe "V2/SlashCommand", type: :request do
           expect(json_body['text']).to eq(InvalidSlashCommand.new("#{params[:command]} #{params[:text]}").message)
         end
 
-        include_examples("Slack API Response")
+        include_examples('Slack API Response')
       end
 
       context 'failed with invalid action' do
@@ -75,7 +75,7 @@ RSpec.describe "V2/SlashCommand", type: :request do
           expect(json_body['text']).to eq(InvalidSlashCommand.new("#{params[:command]} #{params[:text]}").message)
         end
 
-        include_examples("Slack API Response")
+        include_examples('Slack API Response')
       end
     end
 
@@ -99,8 +99,8 @@ RSpec.describe "V2/SlashCommand", type: :request do
               post v2_slash_command_game_scoreboard_path, params: params, headers: headers
               expect(json_body['text']).to eq(default_success_text)
             end
-        
-            include_examples("Slack API Response")
+
+            include_examples('Slack API Response')
           end
         end
       end

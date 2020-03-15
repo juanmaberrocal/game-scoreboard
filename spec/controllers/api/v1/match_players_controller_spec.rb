@@ -66,5 +66,4 @@ RSpec.describe Api::V1::MatchPlayersController, type: :controller do
       end
     end
   end
-
 end

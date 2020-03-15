@@ -55,6 +55,7 @@ module StatisticsGenerators
     # description: calculate nth percentile
     # i = (p / 100) * n
     # v = (i + (i + 1)) / 2
+    # rubocop:disable AbcSize
     def percentile(pct)
       n = raw_statistics.length
       i = ((pct.to_f / 100) * n).ceil
@@ -64,5 +65,6 @@ module StatisticsGenerators
 
       ((x + y).to_f / 2).ceil
     end
+    # rubocop:enable AbcSize
   end
 end

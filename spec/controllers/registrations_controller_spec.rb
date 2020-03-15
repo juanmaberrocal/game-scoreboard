@@ -57,7 +57,7 @@ RSpec.describe RegistrationsController, type: :controller do
     # RegistrationsController. Be sure to keep this updated too.
     before(:each) { request.headers.merge!(auth_headers(player)) }
 
-    context 'with valid params' do 
+    context 'with valid params' do
       xit 'updates player password' do
         expect do
           post :update_password, params: { player: valid_update_password_params }

@@ -7,8 +7,8 @@ class PlayerSerializer < FastJsonapiSerializer
              :first_name,
              :last_name,
              :role, if: proc { |_player, params|
-    params[:public]&.to_bool.blank?
-  }
+               params[:public]&.to_bool.blank?
+             }
 
   attribute :avatar_url, if: proc { |player, _params|
     player.avatar.attached?
