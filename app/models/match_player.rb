@@ -5,7 +5,7 @@
 # Table name: match_players
 #
 #  id            :bigint           not null, primary key
-#  result_status :integer          default("pending"), not null
+#  result_status :enum             default("pending"), not null
 #  winner        :boolean
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -14,8 +14,9 @@
 #
 # Indexes
 #
-#  index_match_players_on_match_id   (match_id)
-#  index_match_players_on_player_id  (player_id)
+#  index_match_players_on_match_id       (match_id)
+#  index_match_players_on_player_id      (player_id)
+#  index_match_players_on_result_status  (result_status)
 #
 # Foreign Keys
 #

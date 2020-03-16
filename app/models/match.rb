@@ -5,14 +5,15 @@
 # Table name: matches
 #
 #  id           :bigint           not null, primary key
-#  match_status :integer          default("pending"), not null
+#  match_status :enum             default("pending"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  game_id      :bigint           not null
 #
 # Indexes
 #
-#  index_matches_on_game_id  (game_id)
+#  index_matches_on_game_id       (game_id)
+#  index_matches_on_match_status  (match_status)
 #
 # Foreign Keys
 #

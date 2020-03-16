@@ -8,7 +8,11 @@
 module WithStatus
   extend ActiveSupport::Concern
 
-  STATUSES = %i[pending confirmed rejected].freeze
+  STATUSES = {
+    pending: 'pending',
+    confirmed: 'confirmed',
+    rejected: 'rejected'
+  }.freeze
 
   included do
     %i[match_status result_status].each do |column|

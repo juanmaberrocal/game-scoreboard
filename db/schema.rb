@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_173826) do
+ActiveRecord::Schema.define(version: 2020_03_16_030206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,24 +55,11 @@ ActiveRecord::Schema.define(version: 2019_10_02_173826) do
     t.index ["jti"], name: "index_jwt_blacklist_on_jti"
   end
 
-  create_table "match_players", force: :cascade do |t|
-    t.bigint "match_id", null: false
-    t.bigint "player_id", null: false
-    t.boolean "winner"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "result_status", default: 0, null: false
-    t.index ["match_id"], name: "index_match_players_on_match_id"
-    t.index ["player_id"], name: "index_match_players_on_player_id"
-  end
+# Could not dump table "match_players" because of following StandardError
+#   Unknown type 'result_status' for column 'result_status'
 
-  create_table "matches", force: :cascade do |t|
-    t.bigint "game_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "match_status", default: 0, null: false
-    t.index ["game_id"], name: "index_matches_on_game_id"
-  end
+# Could not dump table "matches" because of following StandardError
+#   Unknown type 'match_status' for column 'match_status'
 
   create_table "players", force: :cascade do |t|
     t.string "first_name", null: false
