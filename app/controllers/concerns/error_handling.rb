@@ -7,6 +7,8 @@ module ErrorHandling
     rescue_from GeneralApiError,
                 with: :handle_internal_server_error
 
+    rescue_from ActiveRecord::RecordInvalid,
+                with: :handle_internal_server_error
     rescue_from ActiveRecord::RecordNotFound,
                 with: :handle_not_found
 
