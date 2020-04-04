@@ -13,6 +13,7 @@ module Api
 
       def render(options = {})
         unless options[:error]
+          options.merge!(meta: response_metadata)
           options[:json] = serializer.new(options[:json],
                                           options.reject { |k, _| k == :json }) if unserialzed?(options[:json].class) &&
                                                                                    serializer?
@@ -63,6 +64,13 @@ module Api
                                           params[:action],
                                           invalid_param,
                                           params_root[invalid_param]) if invalid_param.present?
+      end
+
+      def response_metadata
+        {
+          model: controller_name.singularize,
+          serializer: FastJsonapiSerializer.name
+        }
       end
 
       # fast_jsonapi Serializer helpers
