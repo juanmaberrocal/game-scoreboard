@@ -34,10 +34,9 @@ module Api
                                                match_params[:results].to_hash)
 
         if @match.save
-          render json: MatchSerializer.new(@match, params: { with_results: true }),
-                 status: :created
+          render json: @match, params: { with_results: true }, status: :created
         else
-          raise ApiError::UnprocessableEntity.new(params[:controller], params[:action], @match.errors)
+          unprocessable_entity!(@match)
         end
       end
 

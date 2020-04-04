@@ -11,4 +11,10 @@ module ApiErrorHandling
     rescue_from ApiError::UnprocessableEntity,
                 with: :handle_unprocessable_entity
   end
+
+  def unprocessable_entity!(record)
+    raise ApiError::UnprocessableEntity.new(params[:controller],
+                                            params[:action],
+                                            record.errors)
+  end
 end
