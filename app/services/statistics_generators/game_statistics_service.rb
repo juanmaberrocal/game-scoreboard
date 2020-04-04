@@ -42,6 +42,7 @@ module StatisticsGenerators
                                         'COUNT(matches.id) AS "played"',
                                         'SUM(CAST(match_players.winner AS INT)) AS "won"'])
                                .where(game: @record)
+                               .confirmed
                                .group(:player_id)
                                .order(won: :desc, played: :asc)
     end
