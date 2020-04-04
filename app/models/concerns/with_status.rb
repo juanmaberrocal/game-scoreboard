@@ -34,12 +34,12 @@ module WithStatus
           unless old_status == :pending
             record.errors
                   .add(attr,
-                       'Status cannot be updated from '\
+                       'cannot be updated from '\
                        "`#{old_status}` to `#{new_status}`")
           end
         else
           record.errors
-                .add(attr, "Status cannot be updated to `#{new_status}`")
+                .add(attr, "cannot be updated to `#{new_status}`")
         end
       end
 
