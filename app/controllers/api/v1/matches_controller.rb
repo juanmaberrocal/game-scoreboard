@@ -3,7 +3,7 @@
 module Api
   module V1
     class MatchesController < ApiController
-      before_action :set_match, only: %i[show update destroy]
+      before_action :set_match, only: %i[update destroy]
 
       # GET /matches
       def index
@@ -11,12 +11,14 @@ module Api
           @game = Game.find_by(id: params[:game_id])
           @matches = @game.matches.select('matches.*', 'match_players.winner')
 
-          render json: MatchSerializer.new(@matches, params: { game_id: params[:game_id] })
+          render json: @matches, params: { game_id: params[:game_id] }
         elsif params[:player_id].present?
           @player = Player.find_by(id: params[:player_id])
-          @matches = @player.matches.select('matches.*', 'match_players.winner')
+          @matches = Match.includes(:match_players)
+                          .where(match_players: { player: @player })
 
-          render json: MatchSerializer.new(@matches, params: { player_id: params[:player_id] })
+          render json: @matches, params: { player_id: params[:player_id] },
+                                 include: [:match_players]
         else
           @matches = Match.all
           render json: @matches
@@ -25,7 +27,8 @@ module Api
 
       # GET /matches/1
       def show
-        render json: @match
+        @match = Match.includes(:match_players).find(params[:id])
+        render json: @match, include: [:match_players]
       end
 
       # POST /matches
@@ -38,20 +41,6 @@ module Api
         else
           unprocessable_entity!(@match)
         end
-      end
-
-      # PATCH/PUT /matches/1
-      def update
-        if @match.update(match_params)
-          render json: @match
-        else
-          render json: @match.errors, status: :unprocessable_entity
-        end
-      end
-
-      # DELETE /matches/1
-      def destroy
-        @match.destroy
       end
 
       private
