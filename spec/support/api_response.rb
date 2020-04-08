@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApiResponse
   def json_body
     JSON.parse(response.body)
@@ -17,6 +19,18 @@ module ApiResponse
 
   def json_attribute(attribute)
     json_attributes[attribute.to_s]
+  end
+
+  def json_relationships
+    json_data['relationships']
+  end
+
+  def json_relationship(relationship)
+    json_relationships[relationship.to_s]['data']
+  end
+
+  def json_included
+    json_body['included']
   end
 end
 
