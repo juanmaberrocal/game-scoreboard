@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :player do
     first_name { Faker::Name.first_name }
@@ -14,9 +16,16 @@ FactoryBot.define do
     factory :player_with_matches do
       transient do
         match_count { 3 }
+        status { nil }
+        match_status { status || :pending }
+        result_status { status || :pending }
 
         after(:create) do |player, evaluator|
-          create_list(:match_player, evaluator.match_count, player: player)
+          evaluator.match_count.times do
+            create(:match_player, player: player,
+                                  match: create(:match, match_status: evaluator.match_status),
+                                  result_status: evaluator.result_status)
+          end
         end
       end
     end

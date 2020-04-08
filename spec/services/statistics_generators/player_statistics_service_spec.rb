@@ -26,9 +26,9 @@ RSpec.describe StatisticsGenerators::PlayerStatisticsService, type: :service do
     end
 
     context '#raw_statistics' do
-      let(:record) { create(:player_with_matches) }
+      let(:record) { create(:player_with_matches, status: :confirmed) }
 
-      it 'returns matches of `@record` only' do
+      it 'returns confirmed matches of `@record` only' do
         create_list(:match_player, 5)
         expect(service.send(:raw_statistics).length).to eq(record.match_players.length)
       end
@@ -37,7 +37,7 @@ RSpec.describe StatisticsGenerators::PlayerStatisticsService, type: :service do
         %w[game_id played won].each do |attribute|
           it "`#{attribute}`" do
             raw_statistics = service.send(:raw_statistics)
-            expect(raw_statistics[0].attributes.key?(attribute)).to eq(true)
+            expect(raw_statistics.first.attributes.key?(attribute)).to eq(true)
           end
         end
       end
