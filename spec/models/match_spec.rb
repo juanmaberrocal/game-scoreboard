@@ -52,11 +52,10 @@ RSpec.describe Match, type: :model do
   end
 
   context '#played_on' do
-    let(:default_format) { '%m/%d/%Y' }
-    let(:custom_format) { '%Y-%m-%d' }
+    let(:custom_format) { '%m/%d/%Y' }
 
-    it 'returns `created_at` date with default format' do
-      expect(foo_match.played_on).to eq(foo_match.created_at.strftime(default_format))
+    it 'returns `created_at` date as a timestamp' do
+      expect(foo_match.played_on).to eq(foo_match.created_at.to_i)
     end
 
     it 'returns `created_at` date with custom format' do

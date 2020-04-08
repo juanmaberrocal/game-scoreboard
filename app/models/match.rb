@@ -57,8 +57,12 @@ class Match < ApplicationRecord
     match
   end
 
-  def played_on(format = '%m/%d/%Y')
-    created_at.strftime(format)
+  def played_on(format = nil)
+    if format
+      created_at.strftime(format)
+    else
+      created_at.to_i
+    end
   end
 
   def match_winners
