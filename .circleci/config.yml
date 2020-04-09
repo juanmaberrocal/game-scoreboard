@@ -38,7 +38,7 @@ jobs:
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      - run: sudo apt install -y psql || true
+      - run: sudo apt-get install postgresql-client-9.6
 
       - save_cache:
           paths:
