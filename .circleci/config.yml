@@ -34,12 +34,15 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: install dependencies
+          name: Install Dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-9.6
+      - run:
+          name: Instal PostgreSQL Client
+          command: |
+            sudo apt-get update
+            sudo apt-get install postgresql-client-9.6
 
       - save_cache:
           paths:
@@ -47,8 +50,11 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:structure:load
+      - run:
+          name: Database Setup
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:structure:load
 
       # run tests!
       - run:
