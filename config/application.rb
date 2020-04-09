@@ -34,6 +34,14 @@ module GameScoreboard
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # When the schema format is set to :sql, the database structure will be dumped
+    # using a tool specific to the database into db/structure.sql. For example,
+    # for PostgreSQL, the pg_dump utility is used.
+    # To load the schema from db/structure.sql, run bin/rails db:structure:load.
+    # Loading this file is done by executing the SQL statements it contains.
+    # By definition, this will create a perfect copy of the database's structure.
+    config.active_record.schema_format = :sql
+
     # Be sure to have the adapter's gem in your Gemfile
     # and follow the adapter's specific installation
     # and deployment instructions.
