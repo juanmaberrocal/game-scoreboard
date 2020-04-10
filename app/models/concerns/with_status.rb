@@ -8,7 +8,11 @@
 module WithStatus
   extend ActiveSupport::Concern
 
-  STATUSES = %i[pending confirmed rejected].freeze
+  STATUSES = {
+    pending: 'pending',
+    confirmed: 'confirmed',
+    rejected: 'rejected'
+  }.freeze
 
   included do
     %i[match_status result_status].each do |column|
@@ -30,12 +34,12 @@ module WithStatus
           unless old_status == :pending
             record.errors
                   .add(attr,
-                       'Status cannot be updated from '\
+                       'cannot be updated from '\
                        "`#{old_status}` to `#{new_status}`")
           end
         else
           record.errors
-                .add(attr, "Status cannot be updated to `#{new_status}`")
+                .add(attr, "cannot be updated to `#{new_status}`")
         end
       end
 

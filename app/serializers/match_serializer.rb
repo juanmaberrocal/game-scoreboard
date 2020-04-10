@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class MatchSerializer < FastJsonapiSerializer
-  attributes :game_id, :played_on
+  belongs_to :game, links: {
+    self: ->(match) { "/games/#{match.game_id}" }
+  }
 
-  belongs_to :game
+  has_many :match_players, links: {
+    related: ->(match) { "/matches/#{match.id}/match_players" }
+  }
 
-  attribute :winner, if: proc { |_match, params|
-    params[:game_id].present? || params[:player_id].present?
-  } do |match, _params|
-    match.winner
-  end
+  attributes :match_status, :played_on
 
   attribute :results, if: proc { |_match, params|
     params[:with_results].present?

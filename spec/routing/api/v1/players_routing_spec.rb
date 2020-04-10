@@ -35,5 +35,13 @@ RSpec.describe Api::V1::PlayersController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/v1/players/1').to route_to('api/v1/players#destroy', id: '1')
     end
+
+    it 'routes to matches#index' do
+      expect(get: '/v1/players/1/matches').to route_to('api/v1/matches#index', player_id: '1')
+    end
+
+    it 'routes to matches#show' do
+      expect(get: '/v1/players/1/matches/1').to route_to('api/v1/matches#show', player_id: '1', id: '1')
+    end
   end
 end

@@ -5,14 +5,15 @@
 # Table name: matches
 #
 #  id           :bigint           not null, primary key
-#  match_status :integer          default("pending"), not null
+#  match_status :enum             default("pending"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  game_id      :bigint           not null
 #
 # Indexes
 #
-#  index_matches_on_game_id  (game_id)
+#  index_matches_on_game_id       (game_id)
+#  index_matches_on_match_status  (match_status)
 #
 # Foreign Keys
 #
@@ -56,8 +57,12 @@ class Match < ApplicationRecord
     match
   end
 
-  def played_on(format = '%m/%d/%Y')
-    created_at.strftime(format)
+  def played_on(format = nil)
+    if format
+      created_at.strftime(format)
+    else
+      created_at.to_i
+    end
   end
 
   def match_winners
@@ -70,8 +75,14 @@ class Match < ApplicationRecord
                                               .generate
   end
 
-  private
+  def trigger_status_change
+    if match_players.rejected.any?
+      rejected!
+    elsif match_players.confirmed.length == match_players.length
+      confirmed!
+    end
+  end
 
-  # def trigger_status_change
-  # end
+  # private
+
 end

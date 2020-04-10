@@ -13,7 +13,8 @@ class Ability
     can :read, Match
     can :create, Match
 
-    can :update, MatchPlayer, player_id: user.id
+    can :confirm, MatchPlayer, player_id: user.id
+    can :reject, MatchPlayer, player_id: user.id
 
     can :read, Player
     can :update, Player, id: user.id

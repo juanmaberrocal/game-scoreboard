@@ -27,10 +27,15 @@ Rails.application.routes.draw do
         ]
 
         # /api/v1/matches
-        resources :matches
-
-        # /api/v1/matche_players
-        resources :match_players, only: %i[update]
+        resources :matches, only: %i[index show create] do
+          # /api/v1/matches/:id/match_players
+          resources :match_players, only: %i[index show], shallow: true do
+            member do
+              post 'confirm'
+              post 'reject'
+            end
+          end
+        end
 
         # /api/v1/players
         resources :players, concerns: %i[

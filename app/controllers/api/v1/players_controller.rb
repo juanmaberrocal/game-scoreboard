@@ -45,9 +45,7 @@ module Api
         if @player.update(player_params)
           render json: @player
         else
-          raise ApiError::UnprocessableEntity.new(params[:controller],
-                                                  params[:action],
-                                                  @player.errors)
+          unprocessable_entity!(@player)
         end
       end
 

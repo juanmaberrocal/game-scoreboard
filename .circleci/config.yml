@@ -33,21 +33,33 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+      # Bundle install
       - run:
-          name: install dependencies
+          name: Install Dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
+      # Install psql for db:structure:load
+      - run:
+          name: Instal PostgreSQL Client
+          command: |
+            sudo apt-get update
+            sudo apt-get install postgresql-client-9.6
+
+      # Save cache
       - save_cache:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run:
+          name: Database Setup
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:structure:load
 
-      # run tests!
+      # Run RSpec
       - run:
           name: run tests
           command: |
@@ -90,7 +102,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop 
+                - develop
                 - master
       - deploy:
           requires:
