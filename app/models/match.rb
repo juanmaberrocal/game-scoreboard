@@ -75,8 +75,14 @@ class Match < ApplicationRecord
                                               .generate
   end
 
-  private
+  def trigger_status_change
+    if match_players.rejected.any?
+      rejected!
+    elsif match_players.confirmed.length == match_players.length
+      confirmed!
+    end
+  end
 
-  # def trigger_status_change
-  # end
+  # private
+
 end

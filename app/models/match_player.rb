@@ -35,8 +35,8 @@ class MatchPlayer < ApplicationRecord
 
   validates_associated :match, :player, on: :create
 
-  # after_update :trigger_match_status_change,
-  #              if: :saved_change_to_result_status?
+  after_update :trigger_match_status_change,
+               if: :saved_change_to_result_status?
 
   def player_name(full_name = false)
     player.player_name(full_name)
@@ -44,7 +44,7 @@ class MatchPlayer < ApplicationRecord
 
   private
 
-  # def trigger_match_status_change
-  #   match.trigger_status_change
-  # end
+  def trigger_match_status_change
+    match.trigger_status_change
+  end
 end
