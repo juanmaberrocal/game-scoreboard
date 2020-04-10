@@ -20,7 +20,7 @@ module Api
 
       # POST /match_players/1/confirm
       def confirm
-        authorize! :update, @match_player
+        authorize! :confirm, @match_player
 
         if @match_player.confirmed!
           render json: @match_player
@@ -31,7 +31,7 @@ module Api
 
       # POST /match_players/1/reject
       def reject
-        authorize! :update, @match_player
+        authorize! :reject, @match_player
 
         if @match_player.rejected!
           render json: @match_player
