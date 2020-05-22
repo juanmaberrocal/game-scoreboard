@@ -249,6 +249,39 @@ ALTER SEQUENCE public.matches_id_seq OWNED BY public.matches.id;
 
 
 --
+-- Name: player_games; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.player_games (
+    id bigint NOT NULL,
+    player_id bigint NOT NULL,
+    game_id bigint NOT NULL,
+    favorite boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: player_games_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.player_games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: player_games_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.player_games_id_seq OWNED BY public.player_games.id;
+
+
+--
 -- Name: players; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -339,6 +372,13 @@ ALTER TABLE ONLY public.matches ALTER COLUMN id SET DEFAULT nextval('public.matc
 
 
 --
+-- Name: player_games id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.player_games ALTER COLUMN id SET DEFAULT nextval('public.player_games_id_seq'::regclass);
+
+
+--
 -- Name: players id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -399,6 +439,14 @@ ALTER TABLE ONLY public.match_players
 
 ALTER TABLE ONLY public.matches
     ADD CONSTRAINT matches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: player_games player_games_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.player_games
+    ADD CONSTRAINT player_games_pkey PRIMARY KEY (id);
 
 
 --
@@ -488,6 +536,27 @@ CREATE INDEX index_matches_on_match_status ON public.matches USING btree (match_
 
 
 --
+-- Name: index_player_games_on_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_player_games_on_game_id ON public.player_games USING btree (game_id);
+
+
+--
+-- Name: index_player_games_on_player_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_player_games_on_player_id ON public.player_games USING btree (player_id);
+
+
+--
+-- Name: index_player_games_on_player_id_and_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_player_games_on_player_id_and_game_id ON public.player_games USING btree (player_id, game_id);
+
+
+--
 -- Name: index_players_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -540,11 +609,27 @@ ALTER TABLE ONLY public.match_players
 
 
 --
+-- Name: player_games fk_rails_9c9f7c8f33; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.player_games
+    ADD CONSTRAINT fk_rails_9c9f7c8f33 FOREIGN KEY (player_id) REFERENCES public.players(id);
+
+
+--
 -- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.active_storage_attachments
     ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: player_games fk_rails_ca29b77afd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.player_games
+    ADD CONSTRAINT fk_rails_ca29b77afd FOREIGN KEY (game_id) REFERENCES public.games(id);
 
 
 --
@@ -572,6 +657,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190928120825'),
 ('20191002173826'),
 ('20200316021914'),
-('20200316030206');
+('20200316030206'),
+('20200509174703');
 
 
