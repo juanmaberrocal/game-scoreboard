@@ -9,6 +9,11 @@ module Api
       def index
         @games = Game.with_attached_avatar
 
+        if params[:player_id].present?
+          @games = @games.includes(:player_games)
+                         .where(player_games: { player_id: params[:player_id] })
+        end
+
         render json: @games, params: { public: params[:public] }
       end
 

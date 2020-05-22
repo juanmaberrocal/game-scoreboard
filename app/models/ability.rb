@@ -3,6 +3,7 @@
 class Ability
   include CanCan::Ability
 
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def initialize(user)
     return unless user.present?
 
@@ -28,4 +29,5 @@ class Ability
       can :manage, Player
     end
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 end

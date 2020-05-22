@@ -42,7 +42,9 @@ Rails.application.routes.draw do
           with_matches
           with_statistics
           with_standings
-        ]
+        ] do
+          resources :games, only: %i[index]
+        end
 
         # /api/v1/slack_bot
         namespace :slack_bot do

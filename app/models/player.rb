@@ -42,6 +42,8 @@ class Player < ApplicationRecord
 
   has_one_attached :avatar
 
+  has_many :player_games
+  has_many :games, through: :player_games
   has_many :match_players, inverse_of: :player
   has_many :matches, -> { order 'matches.created_at DESC' },
            through: :match_players
