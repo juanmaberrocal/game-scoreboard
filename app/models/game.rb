@@ -23,6 +23,8 @@
 class Game < ApplicationRecord
   has_one_attached :avatar
 
+  has_many :player_games
+  has_many :players, through: :player_games
   has_many :matches, -> { order 'matches.created_at DESC' }
 
   validates :name, :slug, presence: true
