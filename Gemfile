@@ -31,7 +31,7 @@ gem 'devise-jwt', '~> 0.5.9'
 gem 'fast_jsonapi'
 
 # Use Active Storage variant
-gem 'image_processing', '~> 1.2', require: false
+gem 'image_processing', '~> 1.12', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '>= 1.0.4'
